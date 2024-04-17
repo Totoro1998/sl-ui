@@ -1,0 +1,12 @@
+@import './base.css';
+@import './tailwind.css';
+
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+#app::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
