@@ -11,5 +11,6 @@ export const STORAGE_KEY = {}
 
 export const APP_ROUTE_PATHS = {
   REGISTER: 'register',
-  LOGIN: 'login'
+  LOGIN: 'login',
+  COUNTRY_REGION_LIST: 'country-region-list'
 }

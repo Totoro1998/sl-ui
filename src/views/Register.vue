@@ -57,12 +57,12 @@ const handleSubmit = () => {
 
 <template>
   <div class="register w-full mx-auto max-w-[556px] pt-12 pb-8">
-    <div class="text-center">
+    <div class="text-center mb-8">
       <h1 class="text-3xl text-[--primary-color]">{{ t('register.title') }}</h1>
       <p class="text-[--primary-second-color] mt-4">{{ t('register.subTitle') }}</p>
     </div>
-    <div>
-      <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
+    <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
+      <div class="space-y-6">
         <div class="grid grid-cols-1 gap-x-2 lg:grid-cols-2">
           <app-input
             v-model="formModel.first_name"
@@ -128,19 +128,19 @@ const handleSubmit = () => {
             :rules="formRules.confirm_password"
           />
         </div>
-        <div class="flex justify-center mt-5">
+        <div class="flex justify-center">
           <van-checkbox v-model="checked" shape="square" class="mr-2" />
           {{ t('policy.needAgree') }}
           <a href="/" class="text-[--warning-color]">{{ t('policy.userAgreement') }}</a>
           {{ t('policy.and')
           }}<a href="/" class="text-[--warning-color]">{{ t('policy.privacyPolicy') }}</a>
         </div>
-        <div class="flex justify-center mt-5">
-          <van-button round color="#ff6418" size="normal" native-type="submit">
+        <div class="flex justify-center">
+          <van-button round color="#ff6418" size="normal" native-type="submit" style="width: 200px">
             {{ t('register.createButton') }}
           </van-button>
         </div>
-      </van-form>
-    </div>
+      </div>
+    </van-form>
   </div>
 </template>
