@@ -47,8 +47,8 @@ export default {
       oneRegistration: '最多报名一次'
     },
     login: {
-      headerTitle: '登录您的少林ID',
-      subTip: '通过您的少林ID访问您在少林数字平台上的所有功能',
+      title: '登录您的少林ID',
+      subTitle: '通过您的少林ID访问您在少林数字平台上的所有功能',
       byVerificationCode: '使用邮箱验证码登录->',
       byPassword: '使用邮箱密码登录->',
       rememberMe: '记住我',

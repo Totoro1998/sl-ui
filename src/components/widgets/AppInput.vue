@@ -16,7 +16,14 @@ const model = defineModel()
 </script>
 
 <template>
-  <van-field class="app-input" v-model="model" :border="false" v-bind="props" />
+  <van-field class="app-input" v-model="model" :border="false" v-bind="props">
+    <template #extra>
+      <slot name="extra"></slot>
+    </template>
+    <template #button>
+      <slot name="button"></slot>
+    </template>
+  </van-field>
 </template>
 
 <style lang="less">
@@ -26,7 +33,10 @@ const model = defineModel()
 }
 .app-input.van-field--label-top {
   background-color: transparent;
-
+  padding: 0;
+  .van-field__label--top {
+    margin-right: 0;
+  }
   .van-field__value {
     background-color: white;
     border-radius: 99px;

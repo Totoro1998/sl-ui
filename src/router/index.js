@@ -18,6 +18,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.REGISTER,
           name: 'REGISTER',
           component: () => import('@/views/Register.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.LOGIN,
+          name: 'LOGIN',
+          component: () => import('@/views/Login.vue')
         }
       ]
     }
