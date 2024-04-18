@@ -33,6 +33,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.COUNTRY_REGION_LIST,
           name: 'COUNTRY_REGION_LIST',
           component: () => import('@/views/CountryRegionList.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.RESET_PASSWORD,
+          name: 'RESET_PASSWORD',
+          component: () => import('@/views/ResetPassword.vue')
         }
       ]
     }

@@ -62,7 +62,7 @@ export default {
     },
     retrievePassword: {
       title: '重置密码',
-      subTip: '通过邮箱和验证码进行密码重置',
+      subTitle: '通过邮箱和验证码进行密码重置',
       sendedTip: '一封包含验证码的邮件已发送至您的以下邮箱',
       verification: '验证',
       resetTip: '输入新的密码以重置',
