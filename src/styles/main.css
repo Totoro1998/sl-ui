@@ -26,3 +26,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
+input:-internal-autofill-selected {
+  background-color: none !important;
+}

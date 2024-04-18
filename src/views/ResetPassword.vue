@@ -7,10 +7,20 @@ import useValidate from '@/hooks/useValidate'
 import { useAuthStore, RESET_PASSWORD_BUTTON_TYPE } from '@/store/auth'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import AppLink from '@/components/widgets/AppLink.vue'
+import { ref } from 'vue'
+
+function secondsToTime(seconds) {
+  var mins = Math.floor(seconds / 60)
+  var secs = seconds % 60
+  var formattedTime = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs
+  return formattedTime
+}
 
 const { t } = useI18n()
 const store = useAuthStore()
-const { resetPasswordSetting } = storeToRefs(store)
+const { resetPasswordSetting, authEmail } = storeToRefs(store)
+const code = ref()
+const password = ref('')
 
 const generateCodeTime = computed(() => {
   return resetPasswordSetting.value.generateCodeTime
@@ -33,9 +43,12 @@ const formRules = useValidate(['email', 'password', 'code'])
 
 const handleSubmit = () => {
   const buttonTypeValue = unref(buttonType)
+  const generateCodeTimeValue = unref(generateCodeTime)
   if (buttonTypeValue == RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP) {
     resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.VERTIFY
-    resetPasswordSetting.value.generateCodeTime = new Date().getTime()
+    if (!generateCodeTimeValue) {
+      resetPasswordSetting.value.generateCodeTime = new Date().getTime()
+    }
   } else if (buttonTypeValue === RESET_PASSWORD_BUTTON_TYPE.VERTIFY) {
     resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.LOGIN
   } else {
@@ -45,24 +58,27 @@ const handleSubmit = () => {
 }
 const handleChangeEmail = () => {
   resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP
-  resetPasswordSetting.value.password = ''
-  resetPasswordSetting.value.generateCodeTime = ''
 }
 
 watch(
-  () => resetPasswordSetting.value.email,
-  (value, oldValue) => {
-    if (oldValue !== value) {
-      resetPasswordSetting.value.generateCodeTime = ''
-    }
+  () => authEmail,
+  () => {
+    resetPasswordSetting.value.generateCodeTime = ''
+    code.value = ''
   }
 )
+
+watch(generateCodeTime, (value) => {
+  if (!value && buttonType.value === RESET_PASSWORD_BUTTON_TYPE.VERTIFY) {
+    resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP
+  }
+})
 </script>
 
 <template>
   <BaseContentLayout :title="t('retrievePassword.title')" :sub-title="subTitle">
     <template v-if="buttonType !== RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP" #headerExtra>
-      <p class="text-[--primary-second-color] mt-4">{{ resetPasswordSetting.email }}</p>
+      <p class="text-[--primary-second-color] mt-4">{{ authEmail }}</p>
       <p
         @click="handleChangeEmail"
         class="text-[--warning-color] flex items-center justify-center gap-x-2 mt-4 cursor-pointer"
@@ -91,15 +107,15 @@ watch(
         <app-input
           v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP"
           type="email"
-          v-model="resetPasswordSetting.email"
+          v-model="authEmail"
           :label="t('inputFields.email')"
           :placeholder="t('inputFields.emailPlaceholder')"
           :rules="formRules.email"
         />
         <app-input
           v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.VERTIFY"
-          v-model="resetPasswordSetting.code"
-          type="password"
+          v-model="code"
+          type="text"
           :label="t('inputFields.verificationCode')"
           :placeholder="t('inputFields.verificationCodePlaceholder')"
           :rules="formRules.code"
@@ -110,7 +126,7 @@ watch(
         </app-input>
         <app-input
           v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.LOGIN"
-          v-model="resetPasswordSetting.password"
+          v-model="password"
           type="password"
           :label="t('inputFields.password')"
           :placeholder="t('inputFields.passwordPlaceholder')"

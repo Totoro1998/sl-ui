@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-const props = defineProps(['barList'])
+const props = defineProps(['barList', 'onClickItem'])
 
 const indexList = computed(() => {
   return props.barList.map((bar) => bar.key)
@@ -40,6 +40,7 @@ const scrollToItem = (key) => {
           class="index-bar-item cursor-pointer hover:bg-slate-100"
           v-for="item in bar.items"
           :key="item.value"
+          @click="onClickItem(item)"
         >
           <slot name="barItem" :item="item"></slot>
         </div>

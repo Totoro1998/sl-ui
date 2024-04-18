@@ -54,6 +54,7 @@ export default {
       changeEmail: '切换邮箱',
       login: '登录',
       nextStep: '下一步',
+      resend: '重新发送',
       register: '注册',
       pleaseLogin: '请登录',
       logout: '注销'
@@ -63,6 +64,7 @@ export default {
       subTitle: '通过邮箱和验证码进行密码重置',
       sendedTip: '一封包含验证码的邮件已发送至您的以下邮箱',
       verification: '验证',
+      resend: '重新发送',
       resetTip: '输入新的密码以重置',
       reset: '重置'
     },

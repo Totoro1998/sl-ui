@@ -14,7 +14,9 @@ const router = useRouter()
 const search = ref('')
 
 const filteredCountryList = computed(() => {
-  return countryList.filter((country) => country.en.includes(search.value) || !search.value)
+  return countryList.filter(
+    (country) => country.en.toUpperCase().includes(search.value.toUpperCase()) || !search.value
+  )
 })
 const indexBarList = computed(() => {
   const groupedData = groupBy(filteredCountryList.value, (item) => item.en.charAt(0))
@@ -48,9 +50,9 @@ const handleClick = (item) => {
       shape="round"
       class="app-search"
     />
-    <AppIndexBar :bar-list="indexBarList">
+    <AppIndexBar :bar-list="indexBarList" @click-item="handleClick">
       <template #barItem="{ item }">
-        <span @click="handleClick(item)">{{ item.en }}</span>
+        <span>{{ item.en }}</span>
       </template>
     </AppIndexBar>
   </div>

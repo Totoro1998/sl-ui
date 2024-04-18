@@ -1,5 +1,5 @@
 <script setup>
-import { unref, watch, computed, onUnmounted, onMounted } from 'vue'
+import { unref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from '@/hooks/useI18n'
 import useValidate from '@/hooks/useValidate'
@@ -17,7 +17,7 @@ function secondsToTime(seconds) {
 
 const { t } = useI18n()
 const store = useAuthStore()
-const { loginSetting, isLoginByPassword, resetLoginSetting } = storeToRefs(store)
+const { loginSetting, isLoginByPassword, authEmail } = storeToRefs(store)
 
 const buttonType = computed(() => {
   return loginSetting.value.buttonType
@@ -32,18 +32,18 @@ const { leaveTime } = useCountDown(undefined, generateCodeTime, () => {
 const { formRules } = useValidate(['email', 'password', 'code'])
 
 const handleRefresh = () => {
-  if (!loginSetting.value.isNeedRemember) {
-    loginSetting.value.email = ''
+  if (!loginSetting.value.isNeedRemember && buttonType.value !== LOGIN_BUTTON_TYPE.VERTIFY) {
+    authEmail.value = ''
     loginSetting.value.password = ''
   }
 }
 onMounted(() => {
   window.addEventListener('beforeunload', handleRefresh)
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleRefresh)
   if (!loginSetting.value.isNeedRemember) {
-    resetLoginSetting()
+    store.resetLoginSetting()
   }
 })
 
@@ -53,10 +53,12 @@ const handleSubmit = () => {
     console.log('login')
   } else if (buttonTypeValue === LOGIN_BUTTON_TYPE.NEXT_STEP) {
     loginSetting.value.buttonType = LOGIN_BUTTON_TYPE.VERTIFY
-    loginSetting.value.generateCodeTime = new Date().getTime()
+    if (!generateCodeTime.value) {
+      loginSetting.value.generateCodeTime = new Date().getTime()
+    }
   } else {
     console.log('code登录')
-    resetLoginSetting()
+    store.resetLoginSetting()
   }
 }
 const handleChangeLoginType = () => {
@@ -73,9 +75,8 @@ const handleChangeEmail = () => {
 }
 
 watch(
-  () => loginSetting.value.email,
+  () => authEmail,
   () => {
-    console.log('fuck')
     loginSetting.value.generateCodeTime = ''
     loginSetting.value.code = ''
   }
@@ -85,7 +86,7 @@ watch(
 <template>
   <BaseContentLayout :title="t('login.title')" :sub-title="t('login.subTitle')">
     <template #headerExtra v-if="buttonType === LOGIN_BUTTON_TYPE.VERTIFY">
-      <p class="text-[--primary-second-color] mt-4">{{ loginSetting.email }}</p>
+      <p class="text-[--primary-second-color] mt-4">{{ authEmail }}</p>
       <p @click="handleChangeEmail" class="text-[--warning-color] mt-4">
         {{ t('login.changeEmail') }}
       </p>
@@ -95,7 +96,7 @@ watch(
         <app-input
           v-if="buttonType !== LOGIN_BUTTON_TYPE.VERTIFY"
           type="email"
-          v-model="loginSetting.email"
+          v-model="authEmail"
           :label="t('inputFields.email')"
           :placeholder="t('inputFields.emailPlaceholder')"
           :rules="formRules.email"

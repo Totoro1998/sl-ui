@@ -1,5 +1,5 @@
 import { ref, unref, watch } from 'vue'
-export default function useCountDown(totalTime = 300, generateCodeTime, endCallback) {
+export default function useCountDown(totalTime = 20, generateCodeTime, endCallback) {
   const leaveTime = ref(totalTime)
   let timerId = ref(null)
 
@@ -13,7 +13,8 @@ export default function useCountDown(totalTime = 300, generateCodeTime, endCallb
   }
 
   const stopCountDown = () => {
-    clearInterval(timerId)
+    clearInterval(timerId.value)
+    leaveTime.value = totalTime
   }
 
   watch(
@@ -22,7 +23,6 @@ export default function useCountDown(totalTime = 300, generateCodeTime, endCallb
       if (value) {
         startCountDown()
       } else {
-        console.log('stopCountDown')
         stopCountDown()
       }
     },
