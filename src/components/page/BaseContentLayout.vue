@@ -4,7 +4,7 @@ defineProps(['title', 'subTitle'])
 <template>
   <div class="w-full mx-auto max-w-[556px] pt-12 pb-8 px-6">
     <div class="lg:text-center mb-8">
-      <h1 class="text-3xl text-[--primary-color] font-semibold">
+      <h1 class="text-4xl text-[--primary-color] font-semibold">
         <slot name="title" v-if="!title"></slot>
         <template v-else>
           {{ title }}

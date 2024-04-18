@@ -34,7 +34,7 @@ const isPassword = computed(() => innerType.value === 'password')
         v-if="type === 'password' && model"
         @click="innerType = isPassword ? 'text' : 'password'"
       >
-        <van-icon :name="isPassword ? 'eye-o' : 'closed-eye'" />
+        <van-icon size="24" :name="isPassword ? 'eye-o' : 'closed-eye'" />
       </span>
     </template>
   </van-field>
@@ -43,7 +43,9 @@ const isPassword = computed(() => innerType.value === 'password')
 <style lang="less">
 .van-field__label {
   color: var(--primary-color);
-  font-weight: bold;
+  label {
+    font-weight: 600;
+  }
 }
 .app-input.van-field--label-top {
   background-color: transparent;

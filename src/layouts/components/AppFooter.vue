@@ -126,7 +126,7 @@ const linkList = [
         </span>
       </div>
     </div>
-    <div class="text-[--primary-second-color] text-center border-t py-6">
+    <div class="text-[--primary-second-color] text-center border-t py-6 px-6">
       Copyright © 2009-now Shaolin Temple . All rights reserved 豫ICP备13016364号-1
     </div>
   </footer>

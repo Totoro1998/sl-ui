@@ -104,7 +104,12 @@ watch(
       </app-input>
       <div class="flex justify-between">
         <span class="flex text-[--primary-second-color]">
-          <van-checkbox v-model="isNeedRemember" shape="square" class="mr-2" />
+          <van-checkbox
+            checked-color="#ff6418"
+            v-model="isNeedRemember"
+            shape="square"
+            class="mr-2 rounded-md"
+          />
           {{ t('login.rememberMe') }}
         </span>
         <a class="text-[--warning-color]" href="/reset-password">{{ t('login.forgotPassword') }}</a>

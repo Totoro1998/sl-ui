@@ -112,7 +112,12 @@ const handleSubmit = () => {
           :rules="formRules.password"
         />
         <div class="flex justify-center">
-          <van-checkbox v-model="checked" shape="square" class="mr-2" />
+          <van-checkbox
+            checked-color="#ff6418"
+            v-model="checked"
+            shape="square"
+            class="mr-2 rounded-md"
+          />
           {{ t('policy.needAgree') }}
           <a href="/" class="text-[--warning-color]">{{ t('policy.userAgreement') }}</a>
           {{ t('policy.and')
