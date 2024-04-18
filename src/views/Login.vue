@@ -17,7 +17,7 @@ function secondsToTime(seconds) {
 
 const { t } = useI18n()
 const store = useAuthStore()
-const { loginSetting, isLoginByPassword } = storeToRefs(store)
+const { loginSetting, isLoginByPassword, resetLoginSetting } = storeToRefs(store)
 
 const buttonType = computed(() => {
   return loginSetting.value.buttonType
@@ -40,9 +40,11 @@ const handleRefresh = () => {
 onMounted(() => {
   window.addEventListener('beforeunload', handleRefresh)
 })
-
 onUnmounted(() => {
   window.removeEventListener('beforeunload', handleRefresh)
+  if (!loginSetting.value.isNeedRemember) {
+    resetLoginSetting()
+  }
 })
 
 const handleSubmit = () => {
@@ -54,11 +56,12 @@ const handleSubmit = () => {
     loginSetting.value.generateCodeTime = new Date().getTime()
   } else {
     console.log('code登录')
-    loginSetting.value.generateCodeTime = ''
+    resetLoginSetting()
   }
 }
 const handleChangeLoginType = () => {
   const isByPasswordValue = unref(isLoginByPassword)
+  loginSetting.value.password = ''
   loginSetting.value.loginType = isByPasswordValue ? LOGIN_TYPE.BY_CODE : LOGIN_TYPE.BY_PASSWORD
   loginSetting.value.buttonType = isByPasswordValue
     ? LOGIN_BUTTON_TYPE.NEXT_STEP
@@ -71,10 +74,10 @@ const handleChangeEmail = () => {
 
 watch(
   () => loginSetting.value.email,
-  (value, oldValue) => {
-    if (oldValue !== value) {
-      loginSetting.value.generateCodeTime = ''
-    }
+  () => {
+    console.log('fuck')
+    loginSetting.value.generateCodeTime = ''
+    loginSetting.value.code = ''
   }
 )
 </script>

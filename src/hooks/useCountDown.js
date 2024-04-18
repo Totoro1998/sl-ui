@@ -22,6 +22,7 @@ export default function useCountDown(totalTime = 300, generateCodeTime, endCallb
       if (value) {
         startCountDown()
       } else {
+        console.log('stopCountDown')
         stopCountDown()
       }
     },
