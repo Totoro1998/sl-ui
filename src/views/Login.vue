@@ -6,6 +6,7 @@ import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useAuthStore, LOGIN_TYPE, LOGIN_BUTTON_TYPE } from '@/store/auth'
 import useValidate from '@/hooks/useValidate'
 import useCountDown from '@/hooks/useCountDown'
+import AppLink from '@/components/widgets/AppLink.vue'
 
 function secondsToTime(seconds) {
   var mins = Math.floor(seconds / 60)
@@ -74,61 +75,68 @@ watch(
       </p>
     </template>
     <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
-      <app-input
-        v-if="buttonType !== LOGIN_BUTTON_TYPE.VERTIFY"
-        type="email"
-        v-model="loginSetting.email"
-        :label="t('inputFields.email')"
-        :placeholder="t('inputFields.emailPlaceholder')"
-        :rules="formRules.email"
-      />
-      <app-input
-        v-if="isLoginByPassword"
-        v-model="loginSetting.password"
-        type="password"
-        :label="t('inputFields.password')"
-        :placeholder="t('inputFields.passwordPlaceholder')"
-        :rules="formRules.password"
-      />
-      <app-input
-        v-if="buttonType === LOGIN_BUTTON_TYPE.VERTIFY"
-        v-model="loginSetting.code"
-        type="text"
-        :label="t('inputFields.verificationCode')"
-        :placeholder="t('inputFields.verificationCodePlaceholder')"
-        :rules="formRules.code"
-      >
-        <template #button v-if="generateCodeTime">
-          {{ secondsToTime(leaveTime) }}
-        </template>
-      </app-input>
-      <div class="flex justify-between">
-        <span class="flex text-[--primary-second-color]">
-          <van-checkbox
-            checked-color="#ff6418"
-            v-model="isNeedRemember"
-            shape="square"
-            class="mr-2 rounded-md"
-          />
-          {{ t('login.rememberMe') }}
-        </span>
-        <a class="text-[--warning-color]" href="/reset-password">{{ t('login.forgotPassword') }}</a>
-      </div>
-      <div class="flex justify-center mt-5">
-        <van-button round color="#ff6418" size="normal" native-type="submit" style="width: 200px">
-          {{
-            buttonType === LOGIN_BUTTON_TYPE.LOGIN
-              ? t('login.login')
-              : buttonType === LOGIN_BUTTON_TYPE.NEXT_STEP
-                ? t('login.nextStep')
-                : t('login.login')
-          }}
-        </van-button>
-      </div>
-      <div class="flex justify-center mt-5">
-        <span class="text-[--primary-second-color]" @click="handleChangeLoginType">
-          {{ isLoginByPassword ? t('login.byVerificationCode') : t('login.byPassword') }}
-        </span>
+      <div class="space-y-6">
+        <app-input
+          v-if="buttonType !== LOGIN_BUTTON_TYPE.VERTIFY"
+          type="email"
+          v-model="loginSetting.email"
+          :label="t('inputFields.email')"
+          :placeholder="t('inputFields.emailPlaceholder')"
+          :rules="formRules.email"
+        />
+        <app-input
+          v-if="isLoginByPassword"
+          v-model="loginSetting.password"
+          type="password"
+          :label="t('inputFields.password')"
+          :placeholder="t('inputFields.passwordPlaceholder')"
+          :rules="formRules.password"
+        />
+        <app-input
+          v-if="buttonType === LOGIN_BUTTON_TYPE.VERTIFY"
+          v-model="loginSetting.code"
+          type="text"
+          :label="t('inputFields.verificationCode')"
+          :placeholder="t('inputFields.verificationCodePlaceholder')"
+          :rules="formRules.code"
+        >
+          <template #button v-if="generateCodeTime">
+            {{ secondsToTime(leaveTime) }}
+          </template>
+        </app-input>
+        <div class="flex justify-between">
+          <span class="flex text-[--primary-second-color]">
+            <van-checkbox
+              checked-color="#ff6418"
+              v-model="isNeedRemember"
+              shape="square"
+              class="mr-2 rounded-md"
+            />
+            {{ t('login.rememberMe') }}
+          </span>
+          <app-link v-if="isLoginByPassword" class="text-[--warning-color]" to="/reset-password">{{
+            t('login.forgotPassword')
+          }}</app-link>
+        </div>
+        <div class="flex justify-center">
+          <van-button round color="#ff6418" size="normal" native-type="submit" style="width: 200px">
+            {{
+              buttonType === LOGIN_BUTTON_TYPE.LOGIN
+                ? t('login.login')
+                : buttonType === LOGIN_BUTTON_TYPE.NEXT_STEP
+                  ? t('login.nextStep')
+                  : t('login.login')
+            }}
+          </van-button>
+        </div>
+        <div class="flex justify-center">
+          <span
+            class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color"
+            @click="handleChangeLoginType"
+          >
+            {{ isLoginByPassword ? t('login.byVerificationCode') : t('login.byPassword') }}
+          </span>
+        </div>
       </div>
     </van-form>
   </BaseContentLayout>
