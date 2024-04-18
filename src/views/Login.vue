@@ -1,12 +1,12 @@
 <script setup>
-import { useI18n } from '@/hooks/useI18n'
 import { unref, ref, watch, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
-import { useAuthStore, LOGIN_TYPE, LOGIN_BUTTON_TYPE } from '@/store/auth'
+import { useI18n } from '@/hooks/useI18n'
 import useValidate from '@/hooks/useValidate'
 import useCountDown from '@/hooks/useCountDown'
 import AppLink from '@/components/widgets/AppLink.vue'
+import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
+import { useAuthStore, LOGIN_TYPE, LOGIN_BUTTON_TYPE } from '@/store/auth'
 
 function secondsToTime(seconds) {
   var mins = Math.floor(seconds / 60)

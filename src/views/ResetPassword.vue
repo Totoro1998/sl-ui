@@ -1,25 +1,20 @@
 <script setup>
-import { useI18n } from '@/hooks/useI18n'
-import { passwordRegex, verificationCodeRegex } from '@/lib/validate'
-import { unref, ref, watch } from 'vue'
-import { useAuthStore, RESET_PASSWORD_BUTTON_TYPE } from '@/store/auth'
+import { unref, watch, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { useI18n } from '@/hooks/useI18n'
+import useCountDown from '@/hooks/useCountDown'
+import useValidate from '@/hooks/useValidate'
+import { useAuthStore, RESET_PASSWORD_BUTTON_TYPE } from '@/store/auth'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
-
-const LEAVE_TIME = 300
-
-function secondsToTime(seconds) {
-  var mins = Math.floor(seconds / 60)
-  var secs = seconds % 60
-  var formattedTime = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs
-  return formattedTime
-}
+import AppLink from '@/components/widgets/AppLink.vue'
 
 const { t } = useI18n()
 const store = useAuthStore()
 const { resetPasswordSetting } = storeToRefs(store)
 
+const generateCodeTime = computed(() => {
+  return resetPasswordSetting.value.generateCodeTime
+})
 const buttonType = computed(() => {
   return resetPasswordSetting.value.buttonType
 })
@@ -31,24 +26,11 @@ const subTitle = computed(() => {
       ? t('retrievePassword.sendedTip')
       : t('retrievePassword.resetTip')
 })
-const formRules = ref({
-  email: [{ required: true, message: '请输入邮箱' }],
-  password: [
-    { required: true, message: '请输入密码' },
-    {
-      pattern: passwordRegex,
-      message: '请输入至少8位密码'
-    }
-  ],
-  code: [
-    { required: true, message: '请输入六位验证码' },
-    {
-      pattern: verificationCodeRegex,
-      message: '请输入六位验证码'
-    }
-  ]
+const { leaveTime } = useCountDown(undefined, generateCodeTime, () => {
+  resetPasswordSetting.value.generateCodeTime = ''
 })
-const leaveTime = ref(LEAVE_TIME)
+const formRules = useValidate(['email', 'password', 'code'])
+
 const handleSubmit = () => {
   const buttonTypeValue = unref(buttonType)
   if (buttonTypeValue == RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP) {
@@ -61,26 +43,10 @@ const handleSubmit = () => {
     resetPasswordSetting.value.generateCodeTime = ''
   }
 }
-
 const handleChangeEmail = () => {
   resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP
   resetPasswordSetting.value.password = ''
   resetPasswordSetting.value.generateCodeTime = ''
-}
-
-const setLeaveTime = () => {
-  const generateCodeTimeValue = unref(resetPasswordSetting).generateCodeTime
-  leaveTime.value -= parseInt((new Date().getTime() - parseInt(generateCodeTimeValue)) / 1000)
-  const timer = setInterval(function () {
-    if (leaveTime.value > 0) {
-      leaveTime.value -= 1
-    }
-    const currentTime = new Date().getTime()
-    if (currentTime >= parseInt(generateCodeTimeValue) + LEAVE_TIME * 1000) {
-      clearInterval(timer)
-      resetPasswordSetting.value.generateCodeTime = ''
-    }
-  }, 1000)
 }
 
 watch(
@@ -89,18 +55,6 @@ watch(
     if (oldValue !== value) {
       resetPasswordSetting.value.generateCodeTime = ''
     }
-  }
-)
-
-watch(
-  () => resetPasswordSetting.value.generateCodeTime,
-  (value) => {
-    if (value && buttonType.value) {
-      setLeaveTime()
-    }
-  },
-  {
-    immediate: true
   }
 )
 </script>
@@ -150,7 +104,7 @@ watch(
           :placeholder="t('inputFields.verificationCodePlaceholder')"
           :rules="formRules.code"
         >
-          <template #button v-if="resetPasswordSetting.generateCodeTime">
+          <template #button v-if="generateCodeTime">
             {{ secondsToTime(leaveTime) }}
           </template>
         </app-input>
@@ -174,12 +128,9 @@ watch(
           </van-button>
         </div>
         <div class="flex justify-center">
-          <a
-            class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
-            href="/login"
-          >
+          <app-link to="/login">
             {{ t('login.byPassword') }}
-          </a>
+          </app-link>
         </div>
       </div>
     </van-form>

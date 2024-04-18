@@ -5,7 +5,7 @@ defineProps(['to'])
 <template>
   <RouterLink
     :to="to"
-    class="cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
+    class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
   >
     <slot></slot>
   </RouterLink>
