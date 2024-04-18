@@ -1,5 +1,5 @@
 import { ref, unref, watch } from 'vue'
-export default function useCountDown(totalTime = 20, generateCodeTime, endCallback) {
+export default function useCountDown(totalTime = 300, generateCodeTime, endCallback) {
   const leaveTime = ref(totalTime)
   let timerId = ref(null)
 

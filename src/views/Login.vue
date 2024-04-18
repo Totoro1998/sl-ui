@@ -19,6 +19,10 @@ const { t } = useI18n()
 const store = useAuthStore()
 const { loginSetting, isLoginByPassword, authEmail } = storeToRefs(store)
 
+if (loginSetting.value.loginType === LOGIN_TYPE.BY_CODE && !loginSetting.value.generateCodeTime) {
+  loginSetting.value.loginType = LOGIN_TYPE.BY_PASSWORD
+}
+
 const buttonType = computed(() => {
   return loginSetting.value.buttonType
 })
@@ -37,6 +41,7 @@ const handleRefresh = () => {
     loginSetting.value.password = ''
   }
 }
+
 onMounted(() => {
   window.addEventListener('beforeunload', handleRefresh)
 })
