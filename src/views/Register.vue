@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import AppInput from '@/components/widgets/AppInput.vue'
 import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
-import { passwordRegex } from '@/lib/validate'
+import useValidate from '@/hooks/useValidate'
 import { useRouter } from 'vue-router'
 const genderList = [
   {
@@ -18,6 +18,7 @@ const genderList = [
 ]
 const { t } = useI18n()
 const router = useRouter()
+
 const formModel = ref({
   first_name: '',
   last_name: '',
@@ -25,32 +26,11 @@ const formModel = ref({
   birthday: '',
   country_or_region: '',
   email: '',
-  password: '',
-  confirm_password: ''
+  password: ''
 })
-const formRules = ref({
-  first_name: [{ required: true, message: '请填写姓名' }],
-  last_name: [{ required: true, message: '请填写姓氏' }],
-  gender: [{ required: true, message: '请选择性别' }],
-  birthday: [{ required: true, message: '请选择生日' }],
-  country_or_region: [{ required: true, message: '请选择国家或地区' }],
-  email: [{ required: true, message: '请输入邮箱' }],
-  password: [
-    { required: true, message: '请输入密码' },
-    {
-      pattern: passwordRegex,
-      message: '请输入至少8位密码'
-    }
-  ],
-  confirm_password: [
-    { required: true, message: '请输入确认密码' },
-    {
-      validator: (val) => formModel.value.password && formModel.value.password === val,
-      message: '与密码一致'
-    }
-  ]
-})
+const { formRules } = useValidate(Object.keys(formModel.value))
 const checked = ref(false)
+
 const handleSubmit = () => {
   if (!checked.value) return
 }
@@ -121,15 +101,6 @@ const handleSubmit = () => {
             :label="t('inputFields.password')"
             :placeholder="t('inputFields.passwordPlaceholder')"
             :rules="formRules.password"
-          />
-        </div>
-        <div class="grid grid-cols-1">
-          <app-input
-            v-model="formModel.confirm_password"
-            type="password"
-            :label="t('inputFields.confirmPassword')"
-            :placeholder="t('inputFields.confirmPasswordPlaceholder')"
-            :rules="formRules.confirm_password"
           />
         </div>
         <div class="flex justify-center">

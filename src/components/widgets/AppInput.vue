@@ -1,4 +1,7 @@
 <script setup>
+import { computed } from 'vue'
+import { ref } from 'vue'
+
 const props = defineProps([
   'type',
   'label',
@@ -13,15 +16,26 @@ const props = defineProps([
   'is-link'
 ])
 const model = defineModel()
+
+const innerType = ref(props.type)
+
+const isPassword = computed(() => innerType.value === 'password')
 </script>
 
 <template>
-  <van-field class="app-input" v-model="model" :border="false" v-bind="props">
+  <van-field class="app-input" v-model="model" v-bind="props" :type="innerType" :border="false">
     <template #extra>
       <slot name="extra"></slot>
     </template>
     <template #button>
-      <slot name="button"></slot>
+      <slot name="button" v-if="type !== 'password'"></slot>
+      <span
+        class="cursor-pointer"
+        v-if="type === 'password' && model"
+        @click="innerType = isPassword ? 'text' : 'password'"
+      >
+        <van-icon :name="isPassword ? 'eye-o' : 'closed-eye'" />
+      </span>
     </template>
   </van-field>
 </template>

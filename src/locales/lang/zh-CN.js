@@ -17,8 +17,6 @@ export default {
       emailPlaceholder: "name{'@'}example.com",
       password: '密码',
       passwordPlaceholder: '请输入至少8位密码',
-      confirmPassword: '确认密码',
-      confirmPasswordPlaceholder: '与密码一致',
       verificationCode: '验证码',
       verificationCodePlaceholder: '请输入六位验证码，有效期 5 分钟',
       fullAddress: '详细地址',

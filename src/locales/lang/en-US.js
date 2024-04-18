@@ -10,7 +10,6 @@ export default {
       countryOrRegion: 'Country/Region',
       email: 'Email',
       password: 'Password',
-      confirmPassword: 'Confirm Password',
       createText: 'Create Shaolin ID'
     }
   }

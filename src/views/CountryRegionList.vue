@@ -8,13 +8,14 @@ import { useCountryStore } from '@/store/country'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const countryStore = useCountryStore()
+const router = useRouter()
 
 const search = ref('')
 
 const filteredCountryList = computed(() => {
   return countryList.filter((country) => country.en.includes(search.value) || !search.value)
 })
-
 const indexBarList = computed(() => {
   const groupedData = groupBy(filteredCountryList.value, (item) => item.en.charAt(0))
   for (const key in groupedData) {
@@ -30,13 +31,10 @@ const indexBarList = computed(() => {
   return list
 })
 
-const countryStore = useCountryStore()
-const router = useRouter()
-
 const handleClick = (item) => {
   countryStore.setCountry(item)
-  router.back()
   search.value = ''
+  router.back()
 }
 </script>
 <template>
