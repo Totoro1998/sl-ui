@@ -131,7 +131,7 @@ watch(
         </div>
         <div class="flex justify-center">
           <span
-            class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color"
+            class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
             @click="handleChangeLoginType"
           >
             {{ isLoginByPassword ? t('login.byVerificationCode') : t('login.byPassword') }}

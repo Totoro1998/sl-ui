@@ -5,6 +5,7 @@ import { unref, ref, watch } from 'vue'
 import { useAuthStore, RESET_PASSWORD_BUTTON_TYPE } from '@/store/auth'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 
 const LEAVE_TIME = 300
 
@@ -105,37 +106,34 @@ watch(
 </script>
 
 <template>
-  <div class="login w-full mx-auto max-w-[556px] pt-12 pb-8">
-    <div class="text-center">
-      <h1 class="text-3xl text-[--primary-color]">{{ t('retrievePassword.title') }}</h1>
-      <p class="text-[--primary-second-color] mt-4">{{ subTitle }}</p>
-      <template v-if="buttonType !== RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP">
-        <p class="text-[--primary-second-color] mt-4">{{ resetPasswordSetting.email }}</p>
-        <p
-          @click="handleChangeEmail"
-          class="text-[--warning-color] flex items-center justify-center gap-x-2 mt-4 cursor-pointer"
-        >
-          {{ t('login.changeEmail') }}
+  <BaseContentLayout :title="t('retrievePassword.title')" :sub-title="subTitle">
+    <template v-if="buttonType !== RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP" #headerExtra>
+      <p class="text-[--primary-second-color] mt-4">{{ resetPasswordSetting.email }}</p>
+      <p
+        @click="handleChangeEmail"
+        class="text-[--warning-color] flex items-center justify-center gap-x-2 mt-4 cursor-pointer"
+      >
+        {{ t('login.changeEmail') }}
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="9.7958984375"
-            height="9.20703125"
-            viewBox="0 0 9.7958984375 9.20703125"
-            fill="none"
-          >
-            <path
-              d="M9.57473 2.07322L7.5015 0L6.7944 0.707107L8.44084 2.35355L0.14795 2.35355L0.14795 3.35355L9.0444 3.35355C9.71257 3.35355 10.0472 2.5457 9.57473 2.07322ZM0.221173 7.13388L2.2944 9.20711L3.0015 8.5L1.35506 6.85355L9.64795 6.85356L9.64795 5.85356L0.751504 5.85355C0.0833284 5.85355 -0.251302 6.66141 0.221173 7.13388Z"
-              fill-rule="evenodd"
-              fill="#FF6418"
-            ></path>
-          </svg>
-        </p>
-      </template>
-    </div>
-    <div>
-      <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="9.7958984375"
+          height="9.20703125"
+          viewBox="0 0 9.7958984375 9.20703125"
+          fill="none"
+        >
+          <path
+            d="M9.57473 2.07322L7.5015 0L6.7944 0.707107L8.44084 2.35355L0.14795 2.35355L0.14795 3.35355L9.0444 3.35355C9.71257 3.35355 10.0472 2.5457 9.57473 2.07322ZM0.221173 7.13388L2.2944 9.20711L3.0015 8.5L1.35506 6.85355L9.64795 6.85356L9.64795 5.85356L0.751504 5.85355C0.0833284 5.85355 -0.251302 6.66141 0.221173 7.13388Z"
+            fill-rule="evenodd"
+            fill="#FF6418"
+          ></path>
+        </svg>
+      </p>
+    </template>
+
+    <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
+      <div class="space-y-6">
         <app-input
           v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP"
           type="email"
@@ -164,7 +162,7 @@ watch(
           :placeholder="t('inputFields.passwordPlaceholder')"
           :rules="formRules.password"
         />
-        <div class="flex justify-center mt-5">
+        <div class="flex justify-center">
           <van-button round color="#ff6418" size="normal" native-type="submit" style="width: 200px">
             {{
               buttonType === RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP
@@ -175,12 +173,15 @@ watch(
             }}
           </van-button>
         </div>
-        <div class="flex justify-center mt-5">
-          <a class="text-[--primary-second-color]" href="/login">
+        <div class="flex justify-center">
+          <a
+            class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
+            href="/login"
+          >
             {{ t('login.byPassword') }}
           </a>
         </div>
-      </van-form>
-    </div>
-  </div>
+      </div>
+    </van-form>
+  </BaseContentLayout>
 </template>
