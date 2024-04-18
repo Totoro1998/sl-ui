@@ -8,7 +8,6 @@ const model = defineModel()
 const showPicker = ref(false)
 const hanleConfirm = ({ selectedOptions }) => {
   showPicker.value = false
-  console.log(selectedOptions)
   model.value = selectedOptions[0].value
 }
 const inputText = computed(() => {

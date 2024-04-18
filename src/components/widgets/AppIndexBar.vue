@@ -19,7 +19,6 @@ const setRef = (key) => (el) => {
 const scrollToItem = (key) => {
   const itemRef = itemsRef.value[`item-${key}`]
   if (itemRef) {
-    console.log(itemRef.offsetTop)
     barListRef.value.scrollTop = itemRef.offsetTop - 24
   }
 }

@@ -1,4 +1,4 @@
-import { passwordRegex } from '@/lib/validate'
+import { passwordRegex, verificationCodeRegex } from '@/lib/validate'
 import { pick } from 'lodash-es'
 import { ref, computed, unref } from 'vue'
 
@@ -15,6 +15,13 @@ export default function useValidate(fields) {
       {
         pattern: passwordRegex,
         message: '请输入至少8位密码'
+      }
+    ],
+    code: [
+      { required: true, message: '请输入六位验证码' },
+      {
+        pattern: verificationCodeRegex,
+        message: '请输入六位验证码'
       }
     ]
   })
