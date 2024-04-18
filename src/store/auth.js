@@ -34,7 +34,8 @@ export const useAuthStore = defineStore(
       generateCodeTime: '',
       email: '',
       password: '',
-      code: ''
+      code: '',
+      isNeedRemember: false
     })
     const isLoginByPassword = computed(
       () => loginSetting.value.loginType === LOGIN_TYPE.BY_PASSWORD

@@ -1,5 +1,5 @@
 <script setup>
-import { unref, ref, watch, computed } from 'vue'
+import { unref, watch, computed, onUnmounted, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from '@/hooks/useI18n'
 import useValidate from '@/hooks/useValidate'
@@ -30,7 +30,20 @@ const { leaveTime } = useCountDown(undefined, generateCodeTime, () => {
 })
 
 const { formRules } = useValidate(['email', 'password', 'code'])
-const isNeedRemember = ref(false)
+
+const handleRefresh = () => {
+  if (!loginSetting.value.isNeedRemember) {
+    loginSetting.value.email = ''
+    loginSetting.value.password = ''
+  }
+}
+onMounted(() => {
+  window.addEventListener('beforeunload', handleRefresh)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', handleRefresh)
+})
 
 const handleSubmit = () => {
   const buttonTypeValue = unref(buttonType)
@@ -108,7 +121,7 @@ watch(
           <span class="flex text-[--primary-second-color]">
             <van-checkbox
               checked-color="#ff6418"
-              v-model="isNeedRemember"
+              v-model="loginSetting.isNeedRemember"
               shape="square"
               class="mr-2 rounded-md"
             />
