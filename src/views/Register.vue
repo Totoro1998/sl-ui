@@ -5,8 +5,19 @@ import AppInput from '@/components/widgets/AppInput.vue'
 import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import { passwordRegex } from '@/lib/validate'
-
+import { useRouter } from 'vue-router'
+const genderList = [
+  {
+    text: '男',
+    value: 'male'
+  },
+  {
+    text: '女',
+    value: 'female'
+  }
+]
 const { t } = useI18n()
+const router = useRouter()
 const formModel = ref({
   first_name: '',
   last_name: '',
@@ -39,16 +50,6 @@ const formRules = ref({
     }
   ]
 })
-const genderList = [
-  {
-    text: '男',
-    value: 'male'
-  },
-  {
-    text: '女',
-    value: 'female'
-  }
-]
 const checked = ref(false)
 const handleSubmit = () => {
   if (!checked.value) return
@@ -96,7 +97,10 @@ const handleSubmit = () => {
           <app-input
             v-model="formModel.country_or_region"
             :label="t('inputFields.countryOrRegion')"
-            placeholder=""
+            :placeholder="t('inputFields.countryOrRegionPlaceholder')"
+            readonly
+            is-link
+            @click="router.push({ name: 'COUNTRY_REGION_LIST' })"
             :rules="formRules.country_or_region"
           />
         </div>

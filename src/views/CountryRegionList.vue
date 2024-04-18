@@ -4,6 +4,8 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { groupBy, sortBy } from 'lodash-es'
 import AppIndexBar from '@/components/widgets/AppIndexBar.vue'
+import { useCountryStore } from '@/store/country'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 
@@ -27,6 +29,15 @@ const indexBarList = computed(() => {
   })
   return list
 })
+
+const countryStore = useCountryStore()
+const router = useRouter()
+
+const handleClick = (item) => {
+  countryStore.setCountry(item)
+  router.back()
+  search.value = ''
+}
 </script>
 <template>
   <div class="register w-full mx-auto max-w-[556px] pt-12 pb-8 space-y-8">
@@ -41,7 +52,7 @@ const indexBarList = computed(() => {
     />
     <AppIndexBar :bar-list="indexBarList">
       <template #barItem="{ item }">
-        <span>{{ item.en }}</span>
+        <span @click="handleClick(item)">{{ item.en }}</span>
       </template>
     </AppIndexBar>
   </div>
