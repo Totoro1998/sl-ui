@@ -38,6 +38,21 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.RESET_PASSWORD,
           name: 'RESET_PASSWORD',
           component: () => import('@/views/ResetPassword.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.RESET_PASSWORD,
+          name: 'RESET_PASSWORD',
+          component: () => import('@/views/ResetPassword.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.PLAYER_REGISTRATION_FORM,
+          name: 'PLAYER_REGISTRATION_FORM',
+          component: () => import('@/views/PlayerRegistrationForm.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.COACH_REGISTRATION_FORM,
+          name: 'COACH_REGISTRATION_FORM',
+          component: () => import('@/views/CoachRegistrationForm.vue')
         }
       ]
     }

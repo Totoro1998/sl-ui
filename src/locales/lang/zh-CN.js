@@ -20,6 +20,7 @@ export default {
       verificationCode: '验证码',
       verificationCodePlaceholder: '请输入六位验证码，有效期 5 分钟',
       fullAddress: '详细地址',
+      fullAddressPlaceholder: '请输入详细地址',
       contactPersonName: '负责人姓名',
       contactPersonNamePlaceholder: '请输入名字，如：Jack Chen',
       companyName: '单位名称',
@@ -27,6 +28,7 @@ export default {
       companyAddreddPlaceholder: '请输入参赛单位详细地址',
       contactInformation: '联系方式',
       contactInformationPlaceholder: '请输入手机号或者邮箱',
+      phone: '电话号码',
       phonePlaceholder: '手机号码'
     },
     register: {
@@ -85,8 +87,9 @@ export default {
       edit: '编辑',
       registerForCompetition: '报名参赛'
     },
-    competitorRegForm: {
-      title: '参赛选手报名表',
+    registrationForm: {
+      playerTitle: '参赛选手报名表',
+      coachTitle: '教练/校长报名表',
       personInfo: '个人信息',
       organizationInfo: '参赛单位信息',
       projectInfo: '参赛项目信息',
@@ -100,9 +103,6 @@ export default {
       deducted: '已减扣',
       saveDraft: '暂存草稿',
       viewRegistrationInfo: '查看报名信息'
-    },
-    coachRegistration: {
-      title: '教练/校长报名表'
     },
     competingEvents: {
       title: '选择参赛项目',

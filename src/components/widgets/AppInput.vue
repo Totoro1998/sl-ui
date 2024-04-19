@@ -13,7 +13,8 @@ const props = defineProps([
   'label-align',
   'onClick',
   'readonly',
-  'is-link'
+  'is-link',
+  'show-word-limit'
 ])
 const model = defineModel()
 
@@ -23,7 +24,13 @@ const isPassword = computed(() => innerType.value === 'password')
 </script>
 
 <template>
-  <van-field class="app-input" v-model="model" v-bind="props" :type="innerType" :border="false">
+  <van-field
+    class="app-input"
+    v-model="model"
+    v-bind="{ ...props, ...$attrs }"
+    :type="innerType"
+    :border="false"
+  >
     <template #extra>
       <slot name="extra"></slot>
     </template>

@@ -13,5 +13,7 @@ export const APP_ROUTE_PATHS = {
   REGISTER: 'register',
   LOGIN: 'login',
   COUNTRY_REGION_LIST: 'country-region-list',
-  RESET_PASSWORD: 'reset-password'
+  RESET_PASSWORD: 'reset-password',
+  PLAYER_REGISTRATION_FORM: 'player-registration-form',
+  COACH_REGISTRATION_FORM: 'coach-registration-form'
 }
