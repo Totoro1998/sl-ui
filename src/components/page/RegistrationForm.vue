@@ -30,14 +30,23 @@ watch(
 </script>
 <template>
   <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
-    <div>
-      <div>
-        <div>1个人信息</div>
-        <div class="flex flex-col lg:flex-row gap-6">
-          <div>
+    <div class="space-y-6">
+      <div class="space-y-6">
+        <div class="flex gap-x-2">
+          <span
+            class="flex items-center bg-[--success-color] text-white justify-center rounded-full h-6 w-6"
+          >
+            1
+          </span>
+          <span class="text-[--primary-second-color]">
+            {{ t('registrationForm.personInfo') }}
+          </span>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-4">
+          <div class="flex items-center justify-center">
             <van-uploader v-model="fileList" :after-read="afterRead" />
           </div>
-          <div>
+          <div class="space-y-6">
             <app-input
               v-model="formModel.first_name"
               :label="t('inputFields.firstName')"
@@ -91,14 +100,82 @@ watch(
           :placeholder="t('inputFields.phonePlaceholder')"
         />
       </div>
-      <div>
-        <div>2报名项目信息</div>
+      <div class="space-y-6">
+        <div class="flex gap-x-2">
+          <span
+            class="flex items-center bg-[--success-color] text-white justify-center rounded-full h-6 w-6"
+          >
+            2
+          </span>
+          <span class="text-[--primary-second-color]">
+            {{ t('registrationForm.organizationInfo') }}
+          </span>
+        </div>
+        <app-input
+          v-model="formModel.company_name"
+          :label="t('inputFields.companyName')"
+          :placeholder="t('inputFields.companyNamePlaceholder')"
+          :rules="formRules.company_name"
+        />
+        <app-input
+          v-model="formModel.contact_person_name"
+          :label="t('inputFields.contactPersonName')"
+          :placeholder="t('inputFields.contactPersonNamePlaceholder')"
+          :rules="formRules.contact_person_name"
+        />
+        <app-input
+          v-model="formModel.company_address"
+          :label="t('inputFields.companyAddress')"
+          :placeholder="t('inputFields.companyAddressPlaceholder')"
+          :rules="formRules.company_address"
+        />
+        <app-input
+          v-model="formModel.contact_type"
+          :label="t('inputFields.contactType')"
+          :placeholder="t('inputFields.contactTypePlaceholder')"
+          :rules="formRules.contact_type"
+        />
       </div>
       <div>
-        <div>3参赛项目信息</div>
+        <div class="flex gap-x-2">
+          <span
+            class="flex items-center bg-[--success-color] text-white justify-center rounded-full h-6 w-6"
+          >
+            3
+          </span>
+          <span class="text-[--primary-second-color]">
+            {{ t('registrationForm.projectInfo') }}
+          </span>
+        </div>
       </div>
-      <div>
-        <div>4参赛项目信息</div>
+      <div class="space-y-6">
+        <div>
+          <div class="flex gap-x-2">
+            <span
+              class="flex items-center bg-[--success-color] text-white justify-center rounded-full h-6 w-6"
+            >
+              4
+            </span>
+            <span class="text-[--primary-second-color]">
+              {{ t('registrationForm.accompanyingPersonnelInfo') }}
+            </span>
+          </div>
+        </div>
+        <div>
+          <div class="mb-1">
+            <label class="text-[--primary-color] font-semibold text-[14px]">{{
+              t('registrationForm.accompanyingPersonnelInfo')
+            }}</label>
+          </div>
+          <div class="h-[56px] flex items-center bg-white rounded-full px-4 justify-between">
+            <span class="text-[--primary-second-color]">
+              {{ t('registrationForm.alreadySelect') }}
+              {{ formModel.accompanying_count }}
+              {{ t('registrationForm.person') }}
+            </span>
+            <van-stepper v-model="formModel.accompanying_count" min="1" />
+          </div>
+        </div>
       </div>
     </div>
   </van-form>

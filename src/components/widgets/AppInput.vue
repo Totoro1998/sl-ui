@@ -25,17 +25,12 @@ const isPassword = computed(() => innerType.value === 'password')
 
 <template>
   <van-field
-    class="app-input"
+    :class="`app-input app-input-${type}`"
     v-model="model"
     v-bind="{ ...props, ...$attrs }"
     :type="innerType"
     :border="false"
   >
-    >
-    <template #left-icon>
-      <slot name="left-icon"></slot>
-    </template>
-
     <template #extra>
       <slot name="extra"></slot>
     </template>
@@ -70,6 +65,11 @@ const isPassword = computed(() => innerType.value === 'password')
     top: calc(50% + 15px);
     transform: translateY(-50%);
     right: 32px;
+  }
+}
+.app-input-textarea.van-field--label-top {
+  .van-field__value {
+    border-radius: 12px;
   }
 }
 </style>
