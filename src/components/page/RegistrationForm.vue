@@ -8,6 +8,7 @@ import AppInput from '../widgets/AppInput.vue'
 import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import useValidate from '@/hooks/useValidate'
+import AppTelInput from '../widgets/AppTelInput.vue'
 
 const { t } = useI18n()
 const countryStore = useCountryStore()
@@ -83,7 +84,7 @@ watch(
           :placeholder="t('inputFields.emailPlaceholder')"
           :rules="formRules.email"
         />
-        <app-input
+        <app-tel-input
           v-model="formModel.phone"
           type="text"
           :label="t('inputFields.phone')"

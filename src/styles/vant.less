@@ -15,3 +15,30 @@
     font-weight: 500;
   }
 }
+
+.van-field__label {
+  color: var(--primary-color);
+  label {
+    font-weight: 600;
+  }
+}
+
+.app-input.van-field--label-top {
+  background-color: transparent;
+  padding: 0;
+  .van-field__label--top {
+    margin-right: 0;
+  }
+  .van-field__value {
+    background-color: white;
+    border-radius: 99px;
+    padding: 16px;
+  }
+
+  .van-cell__right-icon {
+    position: absolute;
+    top: calc(50% + 15px);
+    transform: translateY(-50%);
+    right: 32px;
+  }
+}

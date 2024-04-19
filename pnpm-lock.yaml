@@ -14,12 +14,18 @@ dependencies:
   axios:
     specifier: ^1.6.8
     version: 1.6.8
+  country-json:
+    specifier: ^2.0.0
+    version: 2.0.0
   crypto-js:
     specifier: ^4.2.0
     version: 4.2.0
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  flag-icons:
+    specifier: ^7.2.1
+    version: 7.2.1
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -1443,6 +1449,10 @@ packages:
       is-what: 3.14.1
     dev: true
 
+  /country-json@2.0.0:
+    resolution: {integrity: sha512-0S1xke/tl2B/2DCsqCibkZlfsgtUJ8W9dRNpu3qa0ke2yXqMFsfPBjEl+NqL0UPkWdtOqAowZ214VQ/QwZO/pg==}
+    dev: false
+
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -1827,6 +1837,10 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
     dev: true
+
+  /flag-icons@7.2.1:
+    resolution: {integrity: sha512-EaU4XZmFt1BOilz9nMmJKjma5pOaNjzL7somOhadrrilollh4xj6aaXI2M1sd00VUfVWN0E25Q6xaW3SNt0k/Q==}
+    dev: false
 
   /flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}

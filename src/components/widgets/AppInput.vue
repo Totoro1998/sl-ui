@@ -31,6 +31,11 @@ const isPassword = computed(() => innerType.value === 'password')
     :type="innerType"
     :border="false"
   >
+    >
+    <template #left-icon>
+      <slot name="left-icon"></slot>
+    </template>
+
     <template #extra>
       <slot name="extra"></slot>
     </template>
@@ -48,12 +53,6 @@ const isPassword = computed(() => innerType.value === 'password')
 </template>
 
 <style lang="less">
-.van-field__label {
-  color: var(--primary-color);
-  label {
-    font-weight: 600;
-  }
-}
 .app-input.van-field--label-top {
   background-color: transparent;
   padding: 0;

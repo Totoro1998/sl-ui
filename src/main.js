@@ -1,5 +1,5 @@
 import './styles/main.css'
-
+import 'flag-icons/css/flag-icons.min.css'
 import { createApp } from 'vue'
 import { setupI18n } from '@/locales'
 import App from './App.vue'
