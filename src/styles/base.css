@@ -30,6 +30,8 @@
   --primary-light-color: #999999;
   --content-bg-color: #f9f9ff;
   --warning-color: #ff6418;
+  --waring-light-color: rgb(241, 213, 205);
+  --error-color: '#F5222D';
 }
 
 /* semantic color variables for this project */

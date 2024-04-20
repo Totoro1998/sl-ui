@@ -18,6 +18,10 @@ const { formRules } = useValidate(Object.keys(formModel.value))
 
 const country = computed(() => countryStore.country)
 
+const handleDeleteProject = (index) => {
+  formModel.value.projects.splice(index, 1)
+}
+
 watch(
   country,
   () => {
@@ -146,6 +150,37 @@ watch(
           <span class="text-[--primary-second-color]">
             {{ t('registrationForm.projectInfo') }}
           </span>
+        </div>
+        <div class="border-t border-b">
+          <div
+            class="py-3 space-y-1 border-b last:border-none"
+            v-for="(project, index) in formModel.projects"
+            :key="project.id || project.uuid"
+          >
+            <div class="flex justify-between gap-x-4">
+              <span class="space-x-2">
+                <span>{{ project.type }}</span>
+                <span
+                  v-if="project.id"
+                  class="text-[--warning-color] rounded-full px-2 py-1 text-[12px] font-medium bg-[--waring-light-color]"
+                  >{{ project.id }}</span
+                >
+              </span>
+              <span role="button" class="cursor-pointer" @click="handleDeleteProject(index)">
+                <van-icon size="20" name="clear" color="#F5222D" />
+              </span>
+            </div>
+            <div class="text-[--primary-second-color] text-[14px]" v-if="project.id">
+              {{ project.name }}
+            </div>
+          </div>
+          <div class="flex justify-between py-3 items-center">
+            <button class="flex items-center gap-x-2">
+              <van-icon name="add" size="20" color="#8D8BA7" />
+              {{ t('registrationForm.addProject') }}
+            </button>
+            <van-icon name="arrow" />
+          </div>
         </div>
       </div>
       <div class="space-y-6">
