@@ -53,6 +53,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.COACH_REGISTRATION_FORM,
           name: 'COACH_REGISTRATION_FORM',
           component: () => import('@/views/CoachRegistrationForm.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.REGISTRATION_LIST,
+          name: 'REGISTRATION_LIST',
+          component: () => import('@/views/RegistrationList.vue')
         }
       ]
     }

@@ -31,9 +31,15 @@ const DEFAULT_LOGIN_SETTING = {
   isNeedRemember: false
 }
 
+const DEFAULT_USER_INFO = {
+  name: '',
+  gender: 'male'
+}
+
 export const useAuthStore = defineStore(
   'app-auth',
   () => {
+    const userInfo = ref(DEFAULT_USER_INFO)
     const resetPasswordSetting = ref(DEFAULT_RESET_PASSWORD_SETTING)
     const authEmail = ref('')
     const loginSetting = ref(DEFAULT_LOGIN_SETTING)
@@ -47,6 +53,7 @@ export const useAuthStore = defineStore(
       loginSetting.value = DEFAULT_LOGIN_SETTING
     }
     return {
+      userInfo,
       resetPasswordSetting,
       authEmail,
       loginSetting,

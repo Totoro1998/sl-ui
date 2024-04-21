@@ -15,5 +15,11 @@ export const APP_ROUTE_PATHS = {
   COUNTRY_REGION_LIST: 'country-region-list',
   RESET_PASSWORD: 'reset-password',
   PLAYER_REGISTRATION_FORM: 'player-registration-form',
-  COACH_REGISTRATION_FORM: 'coach-registration-form'
+  COACH_REGISTRATION_FORM: 'coach-registration-form',
+  REGISTRATION_LIST: 'registration-list'
+}
+
+export const GENDER = {
+  FEMALE: 'female',
+  MALE: 'male'
 }
