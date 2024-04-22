@@ -58,6 +58,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.REGISTRATION_LIST,
           name: 'REGISTRATION_LIST',
           component: () => import('@/views/RegistrationList.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.PAYMENT,
+          name: 'REGISTRATION_LIST',
+          component: () => import('@/views/Payment.vue')
         }
       ]
     }
