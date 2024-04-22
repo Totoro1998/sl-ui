@@ -131,16 +131,18 @@ export default {
         '本次世界少林功夫网络考功大赛组委会特别提供的 PayPal 外币专用付款方式。您可以任选以下三种付款方式之一来进行支付:',
       payByEmail: '邮箱付款',
       payByPaypal: 'Paypal 美元/欧元账户付款',
-      account: '账户',
-      payee: '收款人',
+      account: '账户：',
+      payee: '收款人：',
       saveToLocal: '保存到本地',
       paymentReference: '将以下信息填入到付款备注中',
       paymentReferenceTip:
         '填写以下信息有助于帮助我们快速审核和对账，如果填写不正确有可能会导致我们无法确认您的报名。',
-      registrationNumber: '报名编号',
+      registrationNumber: '总决赛报名编号：',
       uploadReceipt: '上传支付成功凭证',
       uploadReceiptTip: '支付成功后，请截图保存支付结果并上传',
-      finishPayment: '我已完成支付'
+      finishPayment: '我已完成支付',
+      copyEmail: '复制邮箱',
+      copy: '复制'
     }
   }
 }
