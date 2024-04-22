@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        position: relative;
+        background: linear-gradient(#ff6418, rgb(239, 238, 244) 50%, rgb(239, 238, 244));
+        min-height: 100vh;
+        padding: 24px;
+      }
+      body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+      .main {
+        max-width: 564px;
+        width: 100%;
+        margin: 0 auto;
+      }
+      .header-banner {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 120px;
+      }
+      .year-img {
+        width: 100%;
+        max-width: 430px;
+      }
+      .logo-img {
+        max-width: 193px;
+        position: absolute;
+        width: 373px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%);
+      }
+      .message-card {
+        width: 100%;
+        padding: 40px 24px;
+        border-radius: 12px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+      }
+      .message-card p {
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div class="header-banner">
+        <img class="year-img" src="./year.png" />
+        <img class="logo-img" src="./get-code-logo.png" />
+      </div>
+      <div class="message-card">
+        <p>您好!</p>
+        <p>以下验证码用于您在少林数字平台上的登录或者找回密码操作：</p>
+        <p style="font-weight: 700; font-size: 32px; color: #ff6418; text-align: center">345887</p>
+        <p style="color: #7d8398; text-align: center">有效期：5分钟</p>
+        <p>少林数字平台工作人员不会以任何方式索要您的验证码，请您妥善保管， 避免泄露露。</p>
+        <p>如验证码已过期，您可以返回邮箱输入页面，重新获取验证码。</p>
+        <p>如以上操作非您本人所为，或者您需要帮助，请联系我们的工作人员： info@gmail.com</p>
+      </div>
+    </main>
+    <script></script>
+  </body>
+</html>

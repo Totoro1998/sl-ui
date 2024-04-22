@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        position: relative;
+        background: linear-gradient(#ff6418, rgb(239, 238, 244) 50%, rgb(239, 238, 244));
+        min-height: 100vh;
+        padding: 24px;
+      }
+      body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+      .main {
+        max-width: 564px;
+        margin: 0 auto;
+      }
+      .header-banner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 60px;
+        margin-bottom: 50px;
+      }
+      .year-img {
+        width: 100%;
+        max-width: 430px;
+      }
+      .logo-img {
+        max-width: 90px;
+      }
+      .slogan-img {
+        position: absolute;
+        width: 373px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+      .message-card {
+        width: 100%;
+        max-width: 564px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 80px 24px;
+        border-radius: 12px;
+        background-color: white;
+      }
+      .avatar-wrapper {
+        height: 100px;
+        width: 100px;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 50%;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      .avatar {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .avatar-img {
+        width: 100%;
+        height: auto;
+      }
+      .message-list {
+        margin-top: 24px;
+      }
+      .message-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #31cc80;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .message-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 48px;
+        align-items: center;
+        padding: 24px 0;
+        border-top: 1px solid #d4d2e3;
+      }
+      .message-item:last-child {
+        border-bottom: 1px solid #d4d2e3;
+      }
+      .message-item_label {
+        font-size: 12px;
+        color: #7d8398;
+        flex-shrink: 0;
+      }
+      .message-item_value {
+        font-size: 14px;
+        color: #251715;
+        text-align: right;
+      }
+      .message-info {
+        margin-top: 24px;
+      }
+      .message-info p {
+        font-size: 14px;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div class="header-banner">
+        <img class="year-img" src="./year.png" />
+        <img class="logo-img" src="./logo.png" />
+        <img class="slogan-img" src="./slogan.png" />
+      </div>
+      <div class="message-card">
+        <div class="avatar-wrapper">
+          <div class="avatar">
+            <img src="./avatar.png" class="avatar-img" />
+          </div>
+        </div>
+
+        <span class="message-title">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="25"
+            height="25"
+            viewBox="0 0 25 25"
+            fill="none"
+          >
+            <path
+              d="M-6.93889e-16 12.5C-3.10665e-16 5.59644 5.59644 3.10665e-16 12.5 6.93889e-16C19.4036 1.07711e-15 25 5.59644 25 12.5C25 19.4036 19.4036 25 12.5 25C5.59644 25 -1.07711e-15 19.4036 -6.93889e-16 12.5ZM11.25 17.3928L19.3214 9.3214L17.5536 7.55363L11.25 13.8573L7.7589 10.3661L5.99113 12.1339L11.25 17.3928Z"
+              fill-rule="evenodd"
+              fill="#05D001"
+            ></path>
+          </svg>
+          报名成功
+        </span>
+        <div class="message-list">
+          <p class="message-item">
+            <span class="message-item_label">报名人</span>
+            <span class="message-item_value">沈旦</span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">性别</span>
+            <span class="message-item_value">男</span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">组别</span>
+            <span class="message-item_value">F组</span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">生日</span>
+            <span class="message-item_value">1985-01-01</span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">参赛项目</span>
+            <span class="message-item_value">
+              1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳，
+              1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳
+            </span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">参赛单位</span>
+            <span class="message-item_value">中国河南嵩山少林寺</span>
+          </p>
+          <p class="message-item">
+            <span class="message-item_label">报名支付</span>
+            <span class="message-item_value">$ 50.00</span>
+          </p>
+        </div>
+      </div>
+      <div class="message-info">
+        <p style="font-weight: 600; font-size: 16px">沈旦，您好</p>
+        <p>
+          非常荣幸的通知您，您报名的“2024少林功夫考功大赛总决赛”已报名成功。报名详情可登录系统并访问以下链接：
+          https://www.shaolin.org.cn/xxxx
+        </p>
+        <p>
+          您可凭此确认函于2024年07月12日18时（北京时间）之前至中国河南省登封市少林接待中心酒店大堂签到。
+        </p>
+        <p>签到时，请准备好以下证件：</p>
+        <p>
+          身份证或者护照等有效证明证件<br />两寸免冠近照<br />本确认函所附之二维码（位于报名信息卡片底部）
+        </p>
+        <p>
+          请您务必确认以下信息准确无误，如有修改，请于2024年07月01日18时（北京时间）之前联系组委会。
+        </p>
+        <p style="font-weight: 600; font-size: 16px; text-align: right; margin-top: 8px">
+          少林考功大赛组委会
+        </p>
+        <p style="text-align: right; margin-top: 8px; font-weight: 500">2024-05-11</p>
+      </div>
+    </main>
+    <script></script>
+  </body>
+</html>
