@@ -63,6 +63,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.PAYMENT,
           name: 'REGISTRATION_LIST',
           component: () => import('@/views/Payment.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.SHAOLIN_TECHNIQUES,
+          name: 'SHAOLIN_TECHNIQUES',
+          component: () => import('@/views/ShaolinTechniques.vue')
         }
       ]
     }

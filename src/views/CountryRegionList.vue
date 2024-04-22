@@ -60,7 +60,6 @@ const handleClick = (item) => {
 
 <style lang="less">
 .app-search {
-  background-color: transparent;
   height: 64px;
   .van-search__content {
     background-color: white;

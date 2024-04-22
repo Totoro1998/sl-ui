@@ -17,7 +17,8 @@ export const APP_ROUTE_PATHS = {
   PLAYER_REGISTRATION_FORM: 'player-registration-form',
   COACH_REGISTRATION_FORM: 'coach-registration-form',
   REGISTRATION_LIST: 'registration-list',
-  PAYMENT: 'payment'
+  PAYMENT: 'payment',
+  SHAOLIN_TECHNIQUES: 'shaolin-techniques'
 }
 
 export const GENDER = {

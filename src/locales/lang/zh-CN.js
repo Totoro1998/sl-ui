@@ -143,6 +143,15 @@ export default {
       finishPayment: '我已完成支付',
       copyEmail: '复制邮箱',
       copy: '复制'
+    },
+    slTechniques: {
+      title: '选择参赛项目',
+      slTechniques: '少林功法',
+      notSlTechniques: '非少林功法',
+      searchPlaceholder: '请输入编号或者套路名称',
+      inputOtherName: '输入其他参赛项目名称',
+      inputPlaceholder: '如：形意拳xx套路',
+      add: '添加'
     }
   }
 }
