@@ -4,13 +4,17 @@ import { BASE_API_URL } from './const'
 
 const config = {
   baseURL: isDevMode() ? BASE_API_URL : '/',
-  timeout: 60 * 1000,
-  withCredentials: true
+  timeout: 60 * 1000
 }
 
 const instance = axios.create(config)
 
 function requestBeforeInterceptor(config) {
+  config.headers = {
+    ...config.headers,
+    lang: 'zh_CN',
+    'Content-Type': 'application/json;charset=UTF-8'
+  }
   return config
 }
 function requestErrorInterceptor(error) {

@@ -76,7 +76,6 @@ const displayItems = computed(() => {
     }
     return item
   })
-  console.log(filterItems)
   return filterItems
 })
 

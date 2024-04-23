@@ -25,3 +25,7 @@ export const GENDER = {
   FEMALE: 'female',
   MALE: 'male'
 }
+
+export const REQUEST_URL = {
+  TEST: '/test/index'
+}
