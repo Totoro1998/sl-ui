@@ -10,11 +10,12 @@
         padding: 0;
         box-sizing: border-box;
       }
-      body {
+      .main-wrapper {
         position: relative;
         background: linear-gradient(#ff6418, rgb(239, 238, 244) 50%, rgb(239, 238, 244));
         min-height: 100vh;
         padding: 24px;
+        width: 100%;
       }
       body::-webkit-scrollbar {
         width: 0;
@@ -124,92 +125,94 @@
     </style>
   </head>
   <body>
-    <main class="main">
-      <div class="header-banner">
-        <img class="year-img" src="./year.png" />
-        <img class="logo-img" src="./logo.png" />
-        <img class="slogan-img" src="./slogan.png" />
-      </div>
-      <div class="message-card">
-        <div class="avatar-wrapper">
-          <div class="avatar">
-            <img src="./avatar.png" class="avatar-img" />
+    <div class="main-wrapper">
+      <main class="main">
+        <div class="header-banner">
+          <img class="year-img" src="./year.png" />
+          <img class="logo-img" src="./logo.png" />
+          <img class="slogan-img" src="./slogan.png" />
+        </div>
+        <div class="message-card">
+          <div class="avatar-wrapper">
+            <div class="avatar">
+              <img src="./avatar.png" class="avatar-img" />
+            </div>
+          </div>
+
+          <span class="message-title">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="25"
+              height="25"
+              viewBox="0 0 25 25"
+              fill="none"
+            >
+              <path
+                d="M-6.93889e-16 12.5C-3.10665e-16 5.59644 5.59644 3.10665e-16 12.5 6.93889e-16C19.4036 1.07711e-15 25 5.59644 25 12.5C25 19.4036 19.4036 25 12.5 25C5.59644 25 -1.07711e-15 19.4036 -6.93889e-16 12.5ZM11.25 17.3928L19.3214 9.3214L17.5536 7.55363L11.25 13.8573L7.7589 10.3661L5.99113 12.1339L11.25 17.3928Z"
+                fill-rule="evenodd"
+                fill="#05D001"
+              ></path>
+            </svg>
+            报名成功
+          </span>
+          <div class="message-list">
+            <p class="message-item">
+              <span class="message-item_label">报名人</span>
+              <span class="message-item_value">沈旦</span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">性别</span>
+              <span class="message-item_value">男</span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">组别</span>
+              <span class="message-item_value">F组</span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">生日</span>
+              <span class="message-item_value">1985-01-01</span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">参赛项目</span>
+              <span class="message-item_value">
+                1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳，
+                1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳
+              </span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">参赛单位</span>
+              <span class="message-item_value">中国河南嵩山少林寺</span>
+            </p>
+            <p class="message-item">
+              <span class="message-item_label">报名支付</span>
+              <span class="message-item_value">$ 50.00</span>
+            </p>
           </div>
         </div>
-
-        <span class="message-title">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="25"
-            height="25"
-            viewBox="0 0 25 25"
-            fill="none"
-          >
-            <path
-              d="M-6.93889e-16 12.5C-3.10665e-16 5.59644 5.59644 3.10665e-16 12.5 6.93889e-16C19.4036 1.07711e-15 25 5.59644 25 12.5C25 19.4036 19.4036 25 12.5 25C5.59644 25 -1.07711e-15 19.4036 -6.93889e-16 12.5ZM11.25 17.3928L19.3214 9.3214L17.5536 7.55363L11.25 13.8573L7.7589 10.3661L5.99113 12.1339L11.25 17.3928Z"
-              fill-rule="evenodd"
-              fill="#05D001"
-            ></path>
-          </svg>
-          报名成功
-        </span>
-        <div class="message-list">
-          <p class="message-item">
-            <span class="message-item_label">报名人</span>
-            <span class="message-item_value">沈旦</span>
+        <div class="message-info">
+          <p style="font-weight: 600; font-size: 16px">沈旦，您好</p>
+          <p>
+            非常荣幸的通知您，您报名的“2024少林功夫考功大赛总决赛”已报名成功。报名详情可登录系统并访问以下链接：
+            https://www.shaolin.org.cn/xxxx
           </p>
-          <p class="message-item">
-            <span class="message-item_label">性别</span>
-            <span class="message-item_value">男</span>
+          <p>
+            您可凭此确认函于2024年07月12日18时（北京时间）之前至中国河南省登封市少林接待中心酒店大堂签到。
           </p>
-          <p class="message-item">
-            <span class="message-item_label">组别</span>
-            <span class="message-item_value">F组</span>
+          <p>签到时，请准备好以下证件：</p>
+          <p>
+            身份证或者护照等有效证明证件<br />两寸免冠近照<br />本确认函所附之二维码（位于报名信息卡片底部）
           </p>
-          <p class="message-item">
-            <span class="message-item_label">生日</span>
-            <span class="message-item_value">1985-01-01</span>
+          <p>
+            请您务必确认以下信息准确无误，如有修改，请于2024年07月01日18时（北京时间）之前联系组委会。
           </p>
-          <p class="message-item">
-            <span class="message-item_label">参赛项目</span>
-            <span class="message-item_value">
-              1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳，
-              1001小洪拳，1002二路小洪拳，1003三路小洪拳，1003三路小洪拳
-            </span>
+          <p style="font-weight: 600; font-size: 16px; text-align: right; margin-top: 8px">
+            少林考功大赛组委会
           </p>
-          <p class="message-item">
-            <span class="message-item_label">参赛单位</span>
-            <span class="message-item_value">中国河南嵩山少林寺</span>
-          </p>
-          <p class="message-item">
-            <span class="message-item_label">报名支付</span>
-            <span class="message-item_value">$ 50.00</span>
-          </p>
+          <p style="text-align: right; margin-top: 8px; font-weight: 500">2024-05-11</p>
         </div>
-      </div>
-      <div class="message-info">
-        <p style="font-weight: 600; font-size: 16px">沈旦，您好</p>
-        <p>
-          非常荣幸的通知您，您报名的“2024少林功夫考功大赛总决赛”已报名成功。报名详情可登录系统并访问以下链接：
-          https://www.shaolin.org.cn/xxxx
-        </p>
-        <p>
-          您可凭此确认函于2024年07月12日18时（北京时间）之前至中国河南省登封市少林接待中心酒店大堂签到。
-        </p>
-        <p>签到时，请准备好以下证件：</p>
-        <p>
-          身份证或者护照等有效证明证件<br />两寸免冠近照<br />本确认函所附之二维码（位于报名信息卡片底部）
-        </p>
-        <p>
-          请您务必确认以下信息准确无误，如有修改，请于2024年07月01日18时（北京时间）之前联系组委会。
-        </p>
-        <p style="font-weight: 600; font-size: 16px; text-align: right; margin-top: 8px">
-          少林考功大赛组委会
-        </p>
-        <p style="text-align: right; margin-top: 8px; font-weight: 500">2024-05-11</p>
-      </div>
-    </main>
+      </main>
+    </div>
     <script></script>
   </body>
 </html>

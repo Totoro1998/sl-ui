@@ -46,3 +46,9 @@ export const REQUEST_URL = {
   SUBMIT_PAYINFO: '/game/order/submitPayInfo',
   UPLOAD_IMAGE: '/upload/image'
 }
+
+export const SEND_EMAIL_CODE_TYPE = {
+  ACTIVE_EMAIL: 10,
+  RESET_PASSWORD: 20,
+  LOGIN_BY_CODE: 30
+}

@@ -38,7 +38,8 @@ export default {
     register: {
       title: '创建您的少林ID',
       createButton: '创建少林ID',
-      subTitle: '通过您的少林ID访问您在少林数字平台上的所有功能'
+      subTitle: '通过您的少林ID访问您在少林数字平台上的所有功能',
+      activeButton: '激活'
     },
     policy: {
       needAgree: '您需要阅读并同意',
@@ -155,9 +156,12 @@ export default {
       inputPlaceholder: '如：形意拳xx套路',
       add: '添加'
     },
+    email: {
+      sendedEmailTip: '一封包含验证码的邮件已发送至您的以下邮箱',
+      resendEmailTip: '没收到？重新发送->'
+    },
     common: {
-      slOfficialWebsite: '少林寺官网',
-      sendedEmailTip: '一封包含验证码的邮件已发送至您的以下邮箱'
+      slOfficialWebsite: '少林寺官网'
     }
   }
 }

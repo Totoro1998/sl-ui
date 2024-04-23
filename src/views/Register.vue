@@ -11,6 +11,9 @@ import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useCountryStore } from '@/store/country'
 import { computed, watch } from 'vue'
 import { useAuthStore } from '@/store/auth'
+import { requestPost } from '@/lib/request'
+import { REQUEST_URL, STORAGE_KEY } from '@/lib/const'
+import LocalStorage from '@/lib/storage'
 const genderList = [
   {
     text: '男',
@@ -30,7 +33,6 @@ const country = computed(() => countryStore.country)
 
 const store = useAuthStore()
 const { formModel } = storeToRefs(store)
-
 const { formRules } = useValidate(Object.keys(formModel.value))
 
 watch(
@@ -46,8 +48,11 @@ watch(
 const checked = ref(false)
 
 const handleSubmit = () => {
-  console.log(formModel.value)
   if (!checked.value) return
+  requestPost(REQUEST_URL.REGISTER, formModel.value).then(() => {
+    LocalStorage.setItem(STORAGE_KEY.REGISTER_EMAIL, formModel.value.email)
+    router.push({ name: 'ACTIVE_EMAIL' })
+  })
 }
 </script>
 
