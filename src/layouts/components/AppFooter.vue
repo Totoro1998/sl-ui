@@ -90,10 +90,34 @@ const linkList = [
 
 <template>
   <footer class="lg:px-[154px] bg-[#E7E6F2]">
-    <div class="flex flex-col gap-y-6 gap-x-6 px-6 lg:flex-row justify-between py-[48px]">
-      <div class="flex flex-col gap-y-4 items-center">
-        <img :src="Logo" alt="logo" />
-        <div class="gap-x-4 items-center hidden lg:flex">
+    <div class="max-w-[--max-content-width] m-auto">
+      <div class="flex flex-col gap-y-6 gap-x-6 px-6 lg:flex-row justify-between py-[48px]">
+        <div class="flex flex-col gap-y-4 items-center">
+          <img :src="Logo" alt="logo" />
+          <div class="gap-x-4 items-center hidden lg:flex">
+            <span
+              v-for="item in imageList"
+              :key="item.alt"
+              class="flex h-9 w-9 rounded-md items-center justify-center bg-[#E7E6F2]"
+            >
+              <img :src="item.src" :alt="item.alt" />
+            </span>
+          </div>
+        </div>
+        <div v-for="link in linkList" :key="link.title">
+          <div class="text-[--primary-color] text-xl font-semibold mb-6">{{ link.title }}</div>
+          <div class="flex flex-col space-y-4">
+            <a
+              class="text-[--primary-second-color] text-base"
+              v-for="item in link.items"
+              :key="item.title"
+              :href="item.href"
+            >
+              {{ item.title }}
+            </a>
+          </div>
+        </div>
+        <div class="flex gap-x-4 items-center justify-center lg:hidden">
           <span
             v-for="item in imageList"
             :key="item.alt"
@@ -103,31 +127,9 @@ const linkList = [
           </span>
         </div>
       </div>
-      <div v-for="link in linkList" :key="link.title">
-        <div class="text-[--primary-color] text-xl font-semibold mb-6">{{ link.title }}</div>
-        <div class="flex flex-col space-y-4">
-          <a
-            class="text-[--primary-second-color] text-base"
-            v-for="item in link.items"
-            :key="item.title"
-            :href="item.href"
-          >
-            {{ item.title }}
-          </a>
-        </div>
+      <div class="text-[--primary-second-color] text-center border-t py-6 px-6">
+        Copyright © 2009-now Shaolin Temple . All rights reserved 豫ICP备13016364号-1
       </div>
-      <div class="flex gap-x-4 items-center justify-center lg:hidden">
-        <span
-          v-for="item in imageList"
-          :key="item.alt"
-          class="flex h-9 w-9 rounded-md items-center justify-center bg-[#E7E6F2]"
-        >
-          <img :src="item.src" :alt="item.alt" />
-        </span>
-      </div>
-    </div>
-    <div class="text-[--primary-second-color] text-center border-t py-6 px-6">
-      Copyright © 2009-now Shaolin Temple . All rights reserved 豫ICP备13016364号-1
     </div>
   </footer>
 </template>

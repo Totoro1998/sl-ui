@@ -18,12 +18,13 @@ router.beforeEach((to, from, next) => {
 </script>
 
 <template>
-  <div
-    ref="wrapperRef"
-    class="w-full flex flex-col hidden-scrollbar h-full bg-[#f2f2f7] overflow-y-scroll relative mx-auto pt-[--header-height] max-w-[--max-content-width] bg-[--bg-color]"
-  >
-    <AppHeader />
-    <AppContent />
+  <div ref="wrapperRef" class="w-full h-full flex flex-col">
+    <div
+      class="flex-1 flex flex-col hidden-scrollbar bg-[#f2f2f7] overflow-y-scroll relative mx-auto pt-[--header-height] max-w-[--max-content-width]"
+    >
+      <AppHeader />
+      <AppContent />
+    </div>
+    <AppFooter />
   </div>
-  <AppFooter />
 </template>
