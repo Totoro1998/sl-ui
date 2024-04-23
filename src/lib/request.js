@@ -23,7 +23,7 @@ function requestErrorInterceptor(error) {
 }
 
 function responseSuccessInterceptor(response) {
-  return response
+  return response.data
 }
 function responseErrorInterceptor(error) {
   console.log(error)

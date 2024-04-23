@@ -34,7 +34,7 @@ const handleSubmit = () => {
     email,
     code: code.value
   }).then(() => {
-    router.push('/')
+    router.push('/login')
   })
 }
 

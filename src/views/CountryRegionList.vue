@@ -40,7 +40,7 @@ const handleClick = (item) => {
 }
 </script>
 <template>
-  <div class="register w-full mx-auto max-w-[556px] pt-12 pb-8 space-y-8">
+  <div class="register w-full mx-auto lg:w-[556px] pt-12 pb-8 space-y-8">
     <div class="text-center">
       <h1 class="text-3xl text-[--primary-color]">{{ t('inputFields.countryOrRegion') }}</h1>
     </div>

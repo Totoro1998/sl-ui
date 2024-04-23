@@ -40,15 +40,6 @@ export const useAuthStore = defineStore(
   'app-auth',
   () => {
     const userInfo = ref(DEFAULT_USER_INFO)
-    const formModel = ref({
-      name: '',
-      surname: '',
-      gender: '',
-      birth: undefined,
-      country: '',
-      email: '',
-      password: ''
-    })
     const resetPasswordSetting = ref(DEFAULT_RESET_PASSWORD_SETTING)
     const authEmail = ref('')
     const loginSetting = ref(DEFAULT_LOGIN_SETTING)
@@ -67,7 +58,6 @@ export const useAuthStore = defineStore(
       authEmail,
       loginSetting,
       isLoginByPassword,
-      formModel,
       resetResetPasswordSetting,
       resetLoginSetting
     }

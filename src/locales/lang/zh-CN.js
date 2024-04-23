@@ -161,7 +161,10 @@ export default {
       resendEmailTip: '没收到？重新发送->'
     },
     common: {
-      slOfficialWebsite: '少林寺官网'
+      slOfficialWebsite: '少林寺官网',
+      loginText: '登录',
+      pleaseLoginText: '您好，请登录',
+      hello: '您好'
     }
   }
 }

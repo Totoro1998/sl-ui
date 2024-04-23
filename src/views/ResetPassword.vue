@@ -8,6 +8,8 @@ import { useAuthStore, RESET_PASSWORD_BUTTON_TYPE } from '@/store/auth'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import AppLink from '@/components/widgets/AppLink.vue'
 import { ref } from 'vue'
+import { requestPost } from '@/lib/request'
+import { REQUEST_URL, SEND_EMAIL_CODE_TYPE } from '@/lib/const'
 
 function secondsToTime(seconds) {
   var mins = Math.floor(seconds / 60)
@@ -19,7 +21,8 @@ function secondsToTime(seconds) {
 const { t } = useI18n()
 const store = useAuthStore()
 const { resetPasswordSetting, authEmail } = storeToRefs(store)
-const code = ref()
+const code = ref('')
+const checkedCode = ref('')
 const password = ref('')
 
 const generateCodeTime = computed(() => {
@@ -45,15 +48,34 @@ const handleSubmit = () => {
   const buttonTypeValue = unref(buttonType)
   const generateCodeTimeValue = unref(generateCodeTime)
   if (buttonTypeValue == RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP) {
-    resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.VERTIFY
     if (!generateCodeTimeValue) {
-      resetPasswordSetting.value.generateCodeTime = new Date().getTime()
+      requestPost(REQUEST_URL.SEND_EMAIL_CODE, {
+        email: authEmail.value,
+        type: SEND_EMAIL_CODE_TYPE.RESET_PASSWORD
+      }).then(() => {
+        resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.VERTIFY
+        resetPasswordSetting.value.generateCodeTime = new Date().getTime()
+      })
     }
   } else if (buttonTypeValue === RESET_PASSWORD_BUTTON_TYPE.VERTIFY) {
-    resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.LOGIN
+    requestPost(REQUEST_URL.CHECK_EMAIL_CODE, {
+      email: authEmail.value,
+      code: code.value,
+      type: 20
+    }).then((res) => {
+      console.log(res)
+      checkedCode.value = res.data.code
+      resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.RESET
+    })
   } else {
-    console.log('code登录')
-    resetPasswordSetting.value.generateCodeTime = ''
+    requestPost(REQUEST_URL.RESET_PWD, {
+      email: authEmail.value,
+      code: checkedCode.value,
+      password: password.value
+    }).then((res) => {
+      console.log(res)
+      resetPasswordSetting.value.generateCodeTime = ''
+    })
   }
 }
 const handleChangeEmail = () => {
@@ -78,7 +100,7 @@ watch(generateCodeTime, (value) => {
 <template>
   <BaseContentLayout :title="t('retrievePassword.title')" :sub-title="subTitle">
     <template v-if="buttonType !== RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP" #headerExtra>
-      <p class="text-[--primary-second-color] mt-4">{{ authEmail }}</p>
+      <p class="font-medium mt-4">{{ authEmail }}</p>
       <p
         @click="handleChangeEmail"
         class="text-[--warning-color] flex items-center justify-center gap-x-2 mt-4 cursor-pointer"
@@ -125,7 +147,7 @@ watch(generateCodeTime, (value) => {
           </template>
         </app-input>
         <app-input
-          v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.LOGIN"
+          v-if="buttonType === RESET_PASSWORD_BUTTON_TYPE.RESET"
           v-model="password"
           type="password"
           :label="t('inputFields.password')"

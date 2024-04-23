@@ -7,6 +7,8 @@ import useCountDown from '@/hooks/useCountDown'
 import AppLink from '@/components/widgets/AppLink.vue'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useAuthStore, LOGIN_TYPE, LOGIN_BUTTON_TYPE } from '@/store/auth'
+import { REQUEST_URL } from '@/lib/const'
+import { requestPost } from '@/lib/request'
 
 function secondsToTime(seconds) {
   var mins = Math.floor(seconds / 60)
@@ -54,16 +56,28 @@ onBeforeUnmount(() => {
 
 const handleSubmit = () => {
   const buttonTypeValue = unref(buttonType)
-  if (buttonTypeValue == LOGIN_BUTTON_TYPE.LOGIN) {
-    console.log('login')
-  } else if (buttonTypeValue === LOGIN_BUTTON_TYPE.NEXT_STEP) {
+
+  if (buttonTypeValue === LOGIN_BUTTON_TYPE.NEXT_STEP) {
     loginSetting.value.buttonType = LOGIN_BUTTON_TYPE.VERTIFY
     if (!generateCodeTime.value) {
       loginSetting.value.generateCodeTime = new Date().getTime()
     }
   } else {
-    console.log('code登录')
-    store.resetLoginSetting()
+    let url = ''
+    const params = {
+      email: authEmail.value
+    }
+    if (buttonTypeValue == LOGIN_BUTTON_TYPE.LOGIN) {
+      params.password = loginSetting.value.password
+      url = REQUEST_URL.LOGIN
+    } else {
+      params.code = loginSetting.value.code
+      url = REQUEST_URL.LOGIN_BY_EMAIL_CODE
+    }
+    requestPost(url, params).then((res) => {
+      console.log(res)
+      store.resetLoginSetting()
+    })
   }
 }
 const handleChangeLoginType = () => {
@@ -91,9 +105,26 @@ watch(
 <template>
   <BaseContentLayout :title="t('login.title')" :sub-title="t('login.subTitle')">
     <template #headerExtra v-if="buttonType === LOGIN_BUTTON_TYPE.VERTIFY">
-      <p class="text-[--primary-second-color] mt-4">{{ authEmail }}</p>
-      <p @click="handleChangeEmail" class="text-[--warning-color] mt-4">
+      <p class="font-medium mt-4">{{ authEmail }}</p>
+      <p
+        @click="handleChangeEmail"
+        class="text-[--warning-color] flex items-center justify-center cursor-pointer gap-x-2 mt-4"
+      >
         {{ t('login.changeEmail') }}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M9.67678 2.46971L7.60355 0.396484L6.89645 1.10359L8.54289 2.75004H0.250001V3.75004H9.14645C9.81462 3.75004 10.1493 2.94218 9.67678 2.46971ZM0.323224 7.53037L2.39645 9.60359L3.10355 8.89649L1.45711 7.25004L9.75 7.25004V6.25004L0.853555 6.25004C0.185379 6.25004 -0.149251 7.05789 0.323224 7.53037Z"
+            fill="#FF6418"
+          />
+        </svg>
       </p>
     </template>
     <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">

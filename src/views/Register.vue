@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useCountryStore } from '@/store/country'
 import { computed, watch } from 'vue'
-import { useAuthStore } from '@/store/auth'
+import { useSignupStore } from '@/store/signup'
 import { requestPost } from '@/lib/request'
 import { REQUEST_URL, STORAGE_KEY } from '@/lib/const'
 import LocalStorage from '@/lib/storage'
@@ -31,7 +31,7 @@ const countryStore = useCountryStore()
 
 const country = computed(() => countryStore.country)
 
-const store = useAuthStore()
+const store = useSignupStore()
 const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
@@ -52,6 +52,7 @@ const handleSubmit = () => {
   requestPost(REQUEST_URL.REGISTER, formModel.value).then(() => {
     LocalStorage.setItem(STORAGE_KEY.REGISTER_EMAIL, formModel.value.email)
     router.push({ name: 'ACTIVE_EMAIL' })
+    store.resetFormModel()
   })
 }
 </script>
