@@ -59,8 +59,8 @@ watch(
             />
             <app-input
               v-model="formModel.last_name"
-              :label="t('inputFields.lastName')"
-              :placeholder="t('inputFields.lastNamePlaceholder')"
+              :label="t('inputFields.surName')"
+              :placeholder="t('inputFields.surNamePlaceholder')"
               :rules="formRules.last_name"
             />
           </div>
@@ -74,10 +74,10 @@ watch(
             :rules="formRules.gender"
           />
           <app-date-picker
-            v-model="formModel.birthday"
-            :label="t('inputFields.birthday')"
+            v-model="formModel.birth"
+            :label="t('inputFields.birth')"
             :placeholder="t('inputFields.birthdayPlaceholder')"
-            :rules="formRules.birthday"
+            :rules="formRules.birth"
           />
         </div>
         <app-input

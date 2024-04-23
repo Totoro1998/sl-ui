@@ -15,6 +15,7 @@ const hanleConfirm = ({ selectedValues }) => {
 watch(
   model,
   (value) => {
+    console.log(value)
     if (!value) {
       currentDate.value = []
       return
@@ -42,6 +43,7 @@ watch(
   />
   <app-popup v-model:show="showPicker">
     <van-date-picker
+      :min-date="new Date(1900, 0, 1)"
       v-model="currentDate"
       :title="placeholder"
       @confirm="hanleConfirm"

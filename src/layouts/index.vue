@@ -25,11 +25,12 @@ requestGet(REQUEST_URL.TEST).then((res) => {
 </script>
 
 <template>
-  <div ref="wrapperRef" class="w-full h-full flex flex-col">
-    <div
-      class="flex-1 flex flex-col hidden-scrollbar bg-[#f2f2f7] overflow-y-scroll relative mx-auto pt-[--header-height] max-w-[--max-content-width]"
-    >
-      <AppHeader />
+  <div
+    ref="wrapperRef"
+    class="w-full h-full overflow-y-scroll hidden-scrollbar relative pt-[--header-height] flex flex-col"
+  >
+    <AppHeader />
+    <div class="flex-1 flex flex-col bg-[#f2f2f7] mx-auto max-w-[--max-content-width]">
       <AppContent />
     </div>
     <AppFooter />

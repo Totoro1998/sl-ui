@@ -4,9 +4,9 @@ export default {
     vantLocale: enUS,
     register: {
       firstName: 'First Name',
-      lastName: 'Surname',
+      surName: 'Surname',
       gender: 'Gender',
-      birthday: 'Birthday',
+      birth: 'Birthday',
       countryOrRegion: 'Country/Region',
       email: 'Email',
       password: 'Password',

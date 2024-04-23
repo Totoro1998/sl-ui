@@ -5,7 +5,7 @@ const DEFAULT_FORM_MODEL = {
   first_name: '',
   last_name: '',
   gender: '',
-  birthday: '',
+  birth: '',
   country_or_region: '',
   email: '',
   phone_number: '',

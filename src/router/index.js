@@ -68,6 +68,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.SHAOLIN_TECHNIQUES,
           name: 'SHAOLIN_TECHNIQUES',
           component: () => import('@/views/ShaolinTechniques.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.ACTIVE_EMAIL,
+          name: 'ACTIVE_EMAIL',
+          component: () => import('@/views/ActiveEmail.vue')
         }
       ]
     }

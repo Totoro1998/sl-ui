@@ -7,7 +7,7 @@ export default function useValidate(fields) {
     first_name: [{ required: true, message: '请填写姓名' }],
     last_name: [{ required: true, message: '请填写姓氏' }],
     gender: [{ required: true, message: '请选择性别' }],
-    birthday: [{ required: true, message: '请选择生日' }],
+    birth: [{ required: true, message: '请选择生日' }],
     country_or_region: [{ required: true, message: '请选择国家或地区' }],
     email: [{ required: true, message: '请输入邮箱' }],
     password: [

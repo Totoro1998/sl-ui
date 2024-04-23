@@ -1,15 +1,18 @@
 import zhCn from 'vant/es/locale/lang/zh-CN'
 export default {
   message: {
+    pageTitle: {
+      activeEmail: '激活您的少林ID'
+    },
     vantLocale: zhCn,
     inputFields: {
       firstName: '名字',
       firstNamePlaceholder: '请输入名字，如：Jack',
-      lastName: '姓氏',
-      lastNamePlaceholder: '请输入姓氏，如：Chen',
+      surName: '姓氏',
+      surNamePlaceholder: '请输入姓氏，如：Chen',
       gender: '性别',
       genderPlaceholder: '请选择性别',
-      birthday: '生日',
+      birth: '生日',
       birthdayPlaceholder: '请选择生日',
       countryOrRegion: '国家/地区',
       countryOrRegionPlaceholder: '搜索国家地区',
@@ -65,7 +68,6 @@ export default {
     retrievePassword: {
       title: '重置密码',
       subTitle: '通过邮箱和验证码进行密码重置',
-      sendedTip: '一封包含验证码的邮件已发送至您的以下邮箱',
       verification: '验证',
       resend: '重新发送',
       resetTip: '输入新的密码以重置',
@@ -154,7 +156,8 @@ export default {
       add: '添加'
     },
     common: {
-      slOfficialWebsite: '少林寺官网'
+      slOfficialWebsite: '少林寺官网',
+      sendedEmailTip: '一封包含验证码的邮件已发送至您的以下邮箱'
     }
   }
 }

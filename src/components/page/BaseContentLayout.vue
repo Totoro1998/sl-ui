@@ -10,7 +10,7 @@ defineProps(['title', 'subTitle'])
           {{ title }}
         </template>
       </h1>
-      <p class="text-[--primary-second-color] text-xl lg:text-2xl mt-4">
+      <p class="text-[--primary-second-color] text-lg mt-4">
         <slot name="subTitle" v-if="!subTitle"></slot>
         <template v-else>
           {{ subTitle }}

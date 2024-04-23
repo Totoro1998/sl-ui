@@ -33,7 +33,7 @@ const subTitle = computed(() => {
   return buttonTypeValue === RESET_PASSWORD_BUTTON_TYPE.NEXT_STEP
     ? t('retrievePassword.subTitle')
     : buttonTypeValue === RESET_PASSWORD_BUTTON_TYPE.VERTIFY
-      ? t('retrievePassword.sendedTip')
+      ? t('common.sendedEmailTip')
       : t('retrievePassword.resetTip')
 })
 const { leaveTime } = useCountDown(undefined, generateCodeTime, () => {

@@ -6,17 +6,19 @@ import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import useValidate from '@/hooks/useValidate'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useCountryStore } from '@/store/country'
 import { computed, watch } from 'vue'
+import { useAuthStore } from '@/store/auth'
 const genderList = [
   {
     text: '男',
-    value: 'male'
+    value: 1
   },
   {
     text: '女',
-    value: 'female'
+    value: 2
   }
 ]
 const { t } = useI18n()
@@ -26,21 +28,15 @@ const countryStore = useCountryStore()
 
 const country = computed(() => countryStore.country)
 
-const formModel = ref({
-  first_name: '',
-  last_name: '',
-  gender: '',
-  birthday: '',
-  country_or_region: '',
-  email: '',
-  password: ''
-})
+const store = useAuthStore()
+const { formModel } = storeToRefs(store)
+
 const { formRules } = useValidate(Object.keys(formModel.value))
 
 watch(
   country,
   () => {
-    formModel.value.country_or_region = country.value.alpha3
+    formModel.value.country = country.value.alpha3
   },
   {
     immediate: true
@@ -50,6 +46,7 @@ watch(
 const checked = ref(false)
 
 const handleSubmit = () => {
+  console.log(formModel.value)
   if (!checked.value) return
 }
 </script>
@@ -60,16 +57,16 @@ const handleSubmit = () => {
       <div class="space-y-6">
         <div class="grid grid-cols-1 gap-y-6 gap-x-4 lg:grid-cols-2">
           <app-input
-            v-model="formModel.first_name"
+            v-model="formModel.name"
             :label="t('inputFields.firstName')"
             :placeholder="t('inputFields.firstNamePlaceholder')"
-            :rules="formRules.first_name"
+            :rules="formRules.name"
           />
           <app-input
-            v-model="formModel.last_name"
-            :label="t('inputFields.lastName')"
-            :placeholder="t('inputFields.lastNamePlaceholder')"
-            :rules="formRules.last_name"
+            v-model="formModel.surname"
+            :label="t('inputFields.surName')"
+            :placeholder="t('inputFields.surNamePlaceholder')"
+            :rules="formRules.surname"
           />
         </div>
         <div class="grid grid-cols-1 gap-y-6 gap-x-4 lg:grid-cols-2">
@@ -81,10 +78,10 @@ const handleSubmit = () => {
             :rules="formRules.gender"
           />
           <app-date-picker
-            v-model="formModel.birthday"
-            :label="t('inputFields.birthday')"
+            v-model="formModel.birth"
+            :label="t('inputFields.birth')"
             :placeholder="t('inputFields.birthdayPlaceholder')"
-            :rules="formRules.birthday"
+            :rules="formRules.birth"
           />
         </div>
         <app-input
@@ -94,7 +91,7 @@ const handleSubmit = () => {
           readonly
           is-link
           @click="router.push({ name: 'COUNTRY_REGION_LIST' })"
-          :rules="formRules.country_or_region"
+          :rules="formRules.country"
         />
         <div>Email & Password</div>
         <app-input
