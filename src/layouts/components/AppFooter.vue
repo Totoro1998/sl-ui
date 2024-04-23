@@ -5,6 +5,9 @@ import Twitter from '@/assets/icons/Twitter.svg'
 import Instagram from '@/assets/icons/Instagram.svg'
 import LinkedIn from '@/assets/icons/LinkedIn.svg'
 import YouTube from '@/assets/icons/YouTube.svg'
+import AppLink from '@/components/widgets/AppLink.vue'
+import { useI18n } from '@/hooks/useI18n'
+
 const imageList = [
   { src: Facebook, alt: 'Facebook' },
   { src: Twitter, alt: 'Twitter' },
@@ -86,14 +89,21 @@ const linkList = [
     ]
   }
 ]
+
+const { t } = useI18n()
 </script>
 
 <template>
   <footer class="lg:px-[154px] bg-[#E7E6F2]">
     <div class="max-w-[--max-content-width] m-auto">
-      <div class="flex flex-col gap-y-6 gap-x-6 px-6 lg:flex-row justify-between py-[48px]">
+      <div
+        class="flex border-b border-b-[#D4D2E3] flex-col gap-y-6 gap-x-6 px-6 lg:flex-row justify-between py-[48px] lg:py-[60px]"
+      >
         <div class="flex flex-col gap-y-4 items-center">
           <img :src="Logo" alt="logo" />
+          <app-link to="/" class="text-[--warning-color] underline">
+            {{ t('common.slOfficialWebsite') }}
+          </app-link>
           <div class="gap-x-4 items-center hidden lg:flex">
             <span
               v-for="item in imageList"

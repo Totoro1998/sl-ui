@@ -152,6 +152,9 @@ export default {
       inputOtherName: '输入其他参赛项目名称',
       inputPlaceholder: '如：形意拳xx套路',
       add: '添加'
+    },
+    common: {
+      slOfficialWebsite: '少林寺官网'
     }
   }
 }
