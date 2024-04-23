@@ -20,10 +20,10 @@ router.beforeEach((to, from, next) => {
 <template>
   <div
     ref="wrapperRef"
-    class="w-full flex flex-col hidden-scrollbar h-full overflow-y-scroll relative mx-auto pt-[--header-height] max-w-[--max-content-width] bg-[--bg-color]"
+    class="w-full flex flex-col hidden-scrollbar h-full bg-[#f2f2f7] overflow-y-scroll relative mx-auto pt-[--header-height] max-w-[--max-content-width] bg-[--bg-color]"
   >
     <AppHeader />
     <AppContent />
-    <AppFooter />
   </div>
+  <AppFooter />
 </template>

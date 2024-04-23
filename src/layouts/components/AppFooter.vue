@@ -89,7 +89,7 @@ const linkList = [
 </script>
 
 <template>
-  <footer class="lg:px-[154px]">
+  <footer class="lg:px-[154px] bg-[#E7E6F2]">
     <div class="flex flex-col gap-y-6 gap-x-6 px-6 lg:flex-row justify-between py-[48px]">
       <div class="flex flex-col gap-y-4 items-center">
         <img :src="Logo" alt="logo" />
