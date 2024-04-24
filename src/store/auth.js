@@ -1,6 +1,6 @@
+import LocalStorage from '@/lib/storage'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { store } from '.'
 
 export const LOGIN_TYPE = {
   BY_PASSWORD: 'by_password',
@@ -79,7 +79,10 @@ export const useAuthStore = defineStore(
   }
 )
 
-// Need to be used outside the setup
 export function useAuthStoreWithOut() {
-  return useAuthStore(store)
+  return (
+    JSON.parse(LocalStorage.getItem('app-auth')) || {
+      userInfo: DEFAULT_USER_INFO
+    }
+  )
 }

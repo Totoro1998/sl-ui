@@ -9,6 +9,8 @@ import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import useValidate from '@/hooks/useValidate'
 import AppTelInput from '../widgets/AppTelInput.vue'
+import { requestPost } from '@/lib/request'
+import { REQUEST_URL } from '@/lib/const'
 
 const { t } = useI18n()
 const countryStore = useCountryStore()
@@ -20,6 +22,18 @@ const country = computed(() => countryStore.country)
 
 const handleDeleteProject = (index) => {
   formModel.value.projects.splice(index, 1)
+}
+
+const afterRead = (file) => {
+  const formData = new FormData()
+  formData.append('file', file.file)
+  requestPost(REQUEST_URL.UPLOAD_IMAGE, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then((res) => {
+    console.log(res)
+  })
 }
 
 watch(
@@ -116,28 +130,28 @@ watch(
           </span>
         </div>
         <app-input
-          v-model="formModel.company_name"
+          v-model="formModel.organize_name"
           :label="t('inputFields.companyName')"
           :placeholder="t('inputFields.companyNamePlaceholder')"
-          :rules="formRules.company_name"
+          :rules="formRules.organize_name"
         />
         <app-input
-          v-model="formModel.contact_person_name"
+          v-model="formModel.organize_head"
           :label="t('inputFields.contactPersonName')"
           :placeholder="t('inputFields.contactPersonNamePlaceholder')"
-          :rules="formRules.contact_person_name"
+          :rules="formRules.organize_head"
         />
         <app-input
-          v-model="formModel.company_address"
+          v-model="formModel.organize_address"
           :label="t('inputFields.companyAddress')"
           :placeholder="t('inputFields.companyAddressPlaceholder')"
-          :rules="formRules.company_address"
+          :rules="formRules.organize_address"
         />
         <app-input
-          v-model="formModel.contact_type"
+          v-model="formModel.organize_contact"
           :label="t('inputFields.contactType')"
           :placeholder="t('inputFields.contactTypePlaceholder')"
-          :rules="formRules.contact_type"
+          :rules="formRules.organize_contact"
         />
       </div>
       <div>

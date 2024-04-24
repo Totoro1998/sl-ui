@@ -5,6 +5,8 @@ import { useI18n } from '@/hooks/useI18n'
 import { computed } from 'vue'
 import AppInput from '@/components/widgets/AppInput.vue'
 import { intersection } from 'lodash-es'
+import { requestGet } from '@/lib/request'
+import { REQUEST_URL } from '@/lib/const'
 
 const { t } = useI18n()
 const items = ref([
@@ -26,7 +28,8 @@ const items = ref([
   },
   { text: '福建', disabled: true, children: [] }
 ])
-const activeIds = ref([1, 2])
+
+const activeIds = ref([])
 const activeIndex = ref(0)
 const tab = ref('sl')
 
@@ -83,6 +86,22 @@ const currentTreeItem = computed(() => {
   return displayItems.value[activeIndex.value]
 })
 
+const initData = () => {
+  requestGet(REQUEST_URL.PROJECT_LIST).then((res) => {
+    items.value = res.data.map((item) => {
+      item.id = item.code
+      item.text = item.name
+      item.children = item.children.map((c) => {
+        ;(c.id = c.code), (c.text = c.name)
+        return c
+      })
+      return item
+    })
+  })
+}
+
+initData()
+
 const handleAddByManual = () => {
   const addTextValue = addText.value
   if (!addTextValue.trim()) {
@@ -92,6 +111,16 @@ const handleAddByManual = () => {
     return
   }
   addedList.value.push(addTextValue)
+}
+
+const handleSpliceActiveIds = (id) => {
+  console.log(id)
+  const findIndex = activeIds.value.findIndex((item) => item === id)
+  if (findIndex === -1) {
+    activeIds.value.push(id)
+  } else {
+    activeIds.value.splice(findIndex, 1)
+  }
 }
 </script>
 <template>
@@ -125,7 +154,8 @@ const handleAddByManual = () => {
           <div
             v-for="item in currentTreeItem.children"
             :key="item.id"
-            class="flex gap-x-2 justify-between px-6 py-4"
+            @click="handleSpliceActiveIds(item.id)"
+            class="flex gap-x-2 justify-between px-6 py-4 cursor-pointer"
           >
             <span class="font-bold flex items-center gap-x-2">
               <span

@@ -11,15 +11,6 @@ const config = {
 const instance = axios.create(config)
 
 function requestBeforeInterceptor(config) {
-  config.headers = {
-    ...config.headers,
-    lang: 'zh_CN',
-    'Content-Type': 'application/json;charset=UTF-8'
-  }
-  const authStore = useAuthStoreWithOut()
-  if (authStore.userInfo.access_token) {
-    config.headers.Authorization = `${authStore.userInfo.token_type} ${authStore.userInfo.access_token}`
-  }
   return config
 }
 function requestErrorInterceptor(error) {
@@ -39,6 +30,22 @@ instance.interceptors.request.use(requestBeforeInterceptor, requestErrorIntercep
 instance.interceptors.response.use(responseSuccessInterceptor, responseErrorInterceptor)
 
 const requestGet = instance.get
-const requestPost = instance.post
+
+function requestPost(url, formData, config = {}) {
+  const headers = {
+    lang: 'zh_CN',
+    'Content-Type': 'application/json;charset=UTF-8',
+    ...config.headers
+  }
+  const authStore = useAuthStoreWithOut()
+  const userInfo = authStore.userInfo
+  if (userInfo.access_token) {
+    headers.Authorization = `${userInfo.token_type} ${userInfo.access_token}`
+  }
+  return instance.post(url, formData, {
+    ...config,
+    headers
+  })
+}
 
 export { requestGet, requestPost }

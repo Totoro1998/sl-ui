@@ -5,7 +5,7 @@ export function createPermissionGuard(router) {
   const userInfo = authStore.userInfo
   // eslint-disable-next-line no-unused-vars
   router.beforeEach(async (to, from, next) => {
-    if (userInfo.email && to.path === '/login') {
+    if (userInfo && userInfo.email && to.path === '/login') {
       next('/')
     } else {
       next()

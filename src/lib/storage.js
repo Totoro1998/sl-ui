@@ -40,4 +40,5 @@ function createStorage({
 const LocalStorage = createStorage({})
 
 export default LocalStorage
+
 export { createStorage }

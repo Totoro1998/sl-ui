@@ -2,34 +2,24 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 const DEFAULT_FORM_MODEL = {
-  first_name: '',
-  last_name: '',
+  headimg: '',
+  order_no: '',
+  name: '',
+  surname: '',
   gender: '',
   birth: '',
-  country_or_region: '',
+  country: '',
+  code: '',
   email: '',
-  phone_number: '',
-  company_name: '',
-  contact_person_name: '',
-  company_address: '',
-  contact_type: '',
-  projects: [
-    {
-      id: '1001',
-      type: '小洪拳',
-      name: '少林拳'
-    },
-    {
-      id: '1002',
-      type: '二路小洪拳',
-      name: '少林段品制套路'
-    },
-    {
-      uuid: 'testtest',
-      type: '二路小洪拳',
-      name: '少林段品制套路'
-    }
-  ]
+  mobile: '',
+  role: '',
+  organize_name: '',
+  organize_head: '',
+  organize_address: '',
+  organize_contact: '',
+  custom_project: [],
+  project_id: [],
+  entourage_num: 0
 }
 export const useRegistrationStore = defineStore('app-registration', () => {
   const formModel = ref(DEFAULT_FORM_MODEL)
