@@ -52,3 +52,7 @@ export const SEND_EMAIL_CODE_TYPE = {
   RESET_PASSWORD: 20,
   LOGIN_BY_CODE: 30
 }
+
+export const CODE_TYPE = {
+  ERROR: 'Error'
+}

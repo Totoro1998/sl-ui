@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { store } from '.'
 
 export const LOGIN_TYPE = {
   BY_PASSWORD: 'by_password',
@@ -31,23 +32,33 @@ const DEFAULT_LOGIN_SETTING = {
   isNeedRemember: false
 }
 
-const DEFAULT_USER_INFO = {
-  name: '',
-  gender: 'male'
+export const DEFAULT_USER_INFO = {
+  email: '',
+  access_token: '',
+  expires_in: '',
+  refresh_token: '',
+  token_type: ''
 }
 
 export const useAuthStore = defineStore(
   'app-auth',
   () => {
-    const userInfo = ref(DEFAULT_USER_INFO)
-    const resetPasswordSetting = ref(DEFAULT_RESET_PASSWORD_SETTING)
     const authEmail = ref('')
-    const loginSetting = ref(DEFAULT_LOGIN_SETTING)
+    const userInfo = ref({ ...DEFAULT_USER_INFO })
+    const resetPasswordSetting = ref({ ...DEFAULT_RESET_PASSWORD_SETTING })
+    const loginSetting = ref({ ...DEFAULT_LOGIN_SETTING })
     const isLoginByPassword = computed(
       () => loginSetting.value.loginType === LOGIN_TYPE.BY_PASSWORD
     )
+
     const resetResetPasswordSetting = () => {
       resetPasswordSetting.value = DEFAULT_RESET_PASSWORD_SETTING
+    }
+    const setUserInfo = (value) => {
+      userInfo.value = {
+        ...userInfo.value,
+        ...value
+      }
     }
     const resetLoginSetting = () => {
       loginSetting.value = DEFAULT_LOGIN_SETTING
@@ -59,10 +70,16 @@ export const useAuthStore = defineStore(
       loginSetting,
       isLoginByPassword,
       resetResetPasswordSetting,
-      resetLoginSetting
+      resetLoginSetting,
+      setUserInfo
     }
   },
   {
     persist: true
   }
 )
+
+// Need to be used outside the setup
+export function useAuthStoreWithOut() {
+  return useAuthStore(store)
+}

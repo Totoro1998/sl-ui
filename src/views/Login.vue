@@ -7,8 +7,9 @@ import useCountDown from '@/hooks/useCountDown'
 import AppLink from '@/components/widgets/AppLink.vue'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useAuthStore, LOGIN_TYPE, LOGIN_BUTTON_TYPE } from '@/store/auth'
-import { REQUEST_URL } from '@/lib/const'
+import { REQUEST_URL, CODE_TYPE } from '@/lib/const'
 import { requestPost } from '@/lib/request'
+import { router } from '@/router'
 
 function secondsToTime(seconds) {
   var mins = Math.floor(seconds / 60)
@@ -75,8 +76,11 @@ const handleSubmit = () => {
       url = REQUEST_URL.LOGIN_BY_EMAIL_CODE
     }
     requestPost(url, params).then((res) => {
-      console.log(res)
-      store.resetLoginSetting()
+      if (res.data.code !== CODE_TYPE.ERROR) {
+        store.resetLoginSetting()
+        store.setUserInfo(res.data)
+        router.push('/')
+      }
     })
   }
 }
@@ -182,13 +186,16 @@ watch(
             }}
           </van-button>
         </div>
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-col items-center gap-y-4">
           <span
             class="text-[--primary-second-color] font-medium cursor-pointer hover:text-[--warning-color] active:text-[--warning-color]"
             @click="handleChangeLoginType"
           >
             {{ isLoginByPassword ? t('login.byVerificationCode') : t('login.byPassword') }}
           </span>
+          <app-link to="/register" style="color: var(--warning-color)">{{
+            t('login.register')
+          }}</app-link>
         </div>
       </div>
     </van-form>

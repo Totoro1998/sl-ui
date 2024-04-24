@@ -10,10 +10,10 @@ function createStorage({
 }) {
   const { encrypt, decrypt } = AesEncryption(cacheCipher)
   return {
-    setItem(key, value, expire) {
+    setItem(key, value, expire = 2) {
       const data = {
         value,
-        expire: expire ? Date.now() + expire * 1000 * 60 ** 60 * 24 : 0
+        expire: expire ? Date.now() + expire * 1000 * 60 * 60 : 0
       }
       const stringifiedData = JSON.stringify(data)
       const encryptedData = hasEncrypt ? encrypt(stringifiedData) : stringifiedData

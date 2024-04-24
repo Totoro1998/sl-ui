@@ -9,6 +9,9 @@ import useValidate from '@/hooks/useValidate'
 import { requestPost } from '@/lib/request'
 import { REQUEST_URL } from '@/lib/const'
 import { ref } from 'vue'
+import { useAuthStore } from '@/store/auth'
+import { storeToRefs } from 'pinia'
+import { useCountryStore } from '@/store/country'
 
 const { t } = useI18n()
 
@@ -16,7 +19,9 @@ const router = useRouter()
 
 const email = LocalStorage.getItem(STORAGE_KEY.REGISTER_EMAIL)
 
-console.log(email)
+const countryStore = useCountryStore()
+const store = useAuthStore()
+const { authEmail } = storeToRefs(store)
 
 const code = ref('')
 
@@ -34,6 +39,9 @@ const handleSubmit = () => {
     email,
     code: code.value
   }).then(() => {
+    authEmail.value = email
+    countryStore.setCountry('')
+    LocalStorage.removeItem(STORAGE_KEY.REGISTER_EMAIL)
     router.push('/login')
   })
 }

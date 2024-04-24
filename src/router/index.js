@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/index.vue'
 import { APP_ROUTE_PATHS } from '@/lib/const'
+import { createPermissionGuard } from './guard/permissionGuard'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,6 +80,8 @@ export const router = createRouter({
   ],
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
+
+createPermissionGuard(router)
 
 export function setupRouter(app) {
   app.use(router)
