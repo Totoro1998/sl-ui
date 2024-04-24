@@ -114,7 +114,6 @@ const handleAddByManual = () => {
 }
 
 const handleSpliceActiveIds = (id) => {
-  console.log(id)
   const findIndex = activeIds.value.findIndex((item) => item === id)
   if (findIndex === -1) {
     activeIds.value.push(id)
@@ -122,6 +121,9 @@ const handleSpliceActiveIds = (id) => {
     activeIds.value.splice(findIndex, 1)
   }
 }
+
+const handleClear = () => {}
+const confirmAdd = () => {}
 </script>
 <template>
   <BaseContentLayout :title="t('slTechniques.title')" class="space-y-4">
@@ -207,10 +209,33 @@ const handleSpliceActiveIds = (id) => {
         <van-icon name="cross" @click="addedList.splice(index, 1)" />
       </span>
     </div>
+    <div class="w-full flex items-center gap-x-2 justify-center">
+      <van-button
+        @click="handleClear"
+        color="rgb(252, 209, 188)"
+        style="width: 100px"
+        class="clear-button"
+        round
+        >{{ t('slTechniques.clear') }}</van-button
+      >
+      <van-button
+        round
+        @click="confirmAdd"
+        color="#FF6418"
+        style="width: 160px"
+        class="confirm-button"
+        >{{ t('slTechniques.confirmAdd') }}</van-button
+      >
+    </div>
   </BaseContentLayout>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
+.clear-button {
+  .van-button__content {
+    color: #ff6418;
+  }
+}
 .app-search {
   padding: 0;
 }

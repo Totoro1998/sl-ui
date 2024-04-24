@@ -154,7 +154,9 @@ export default {
       searchPlaceholder: '请输入编号或者套路名称',
       inputOtherName: '输入其他参赛项目名称',
       inputPlaceholder: '如：形意拳xx套路',
-      add: '添加'
+      add: '添加',
+      clear: '清空',
+      confirmAdd: '确认添加'
     },
     email: {
       sendedEmailTip: '一封包含验证码的邮件已发送至您的以下邮箱',

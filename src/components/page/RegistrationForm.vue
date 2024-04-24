@@ -11,6 +11,7 @@ import useValidate from '@/hooks/useValidate'
 import AppTelInput from '../widgets/AppTelInput.vue'
 import { requestPost } from '@/lib/request'
 import { REQUEST_URL } from '@/lib/const'
+import { ref } from 'vue'
 
 const { t } = useI18n()
 const countryStore = useCountryStore()
@@ -19,6 +20,8 @@ const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
 const country = computed(() => countryStore.country)
+
+const uploadFileId = ref('')
 
 const handleDeleteProject = (index) => {
   formModel.value.projects.splice(index, 1)
@@ -32,7 +35,7 @@ const afterRead = (file) => {
       'Content-Type': 'multipart/form-data'
     }
   }).then((res) => {
-    console.log(res)
+    uploadFileId.value = res.data.hash
   })
 }
 
@@ -112,9 +115,9 @@ watch(
           :rules="formRules.email"
         />
         <app-tel-input
-          v-model="formModel.phone"
+          v-model="formModel.mobile"
           type="text"
-          :label="t('inputFields.phone')"
+          :label="t('inputFields.mobile')"
           :placeholder="t('inputFields.phonePlaceholder')"
         />
       </div>
