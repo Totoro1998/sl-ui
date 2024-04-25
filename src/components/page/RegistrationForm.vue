@@ -10,23 +10,34 @@ import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import useValidate from '@/hooks/useValidate'
 import AppTelInput from '../widgets/AppTelInput.vue'
 import { requestPost } from '@/lib/request'
-import { REQUEST_URL } from '@/lib/const'
+import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
 import { ref } from 'vue'
+import { omit } from 'lodash-es'
 
+const genderList = [
+  {
+    text: '男',
+    value: 1
+  },
+  {
+    text: '女',
+    value: 2
+  }
+]
+const props = defineProps(['type'])
 const { t } = useI18n()
 const countryStore = useCountryStore()
 const store = useRegistrationStore()
 const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
-const country = computed(() => countryStore.country)
-
 const uploadFileId = ref('')
 
+const country = computed(() => countryStore.country)
+const isUser = computed(() => props.type === ORDER_TYPE.USER)
 const handleDeleteProject = (index) => {
   formModel.value.projects.splice(index, 1)
 }
-
 const afterRead = (file) => {
   const formData = new FormData()
   formData.append('file', file.file)
@@ -37,6 +48,24 @@ const afterRead = (file) => {
   }).then((res) => {
     uploadFileId.value = res.data.hash
   })
+}
+
+const handleSubmit = () => {
+  let params = { ...formModel }
+  params.headimg = uploadFileId.value
+  params.organize_info = {
+    organize_name: params.organize_name,
+    organize_head: params.organize_head,
+    organize_address: params.organize_address,
+    organize_contact: params.organize_contact
+  }
+  params = omit(params, ['organize_name', 'organize_head', 'organize_address', 'organize_contact'])
+  if (isUser.value) {
+    params.type = ORDER_TYPE.USER
+    params.role = 'personal'
+  } else {
+    params.type = ORDER_TYPE.ORGANIZE
+  }
 }
 
 watch(
@@ -69,16 +98,16 @@ watch(
           </div>
           <div class="space-y-6">
             <app-input
-              v-model="formModel.first_name"
-              :label="t('inputFields.firstName')"
-              :placeholder="t('inputFields.firstNamePlaceholder')"
-              :rules="formRules.first_name"
+              v-model="formModel.name"
+              :label="t('inputFields.name')"
+              :placeholder="t('inputFields.namePlaceholder')"
+              :rules="formRules.name"
             />
             <app-input
-              v-model="formModel.last_name"
+              v-model="formModel.surname"
               :label="t('inputFields.surName')"
               :placeholder="t('inputFields.surNamePlaceholder')"
-              :rules="formRules.last_name"
+              :rules="formRules.surname"
             />
           </div>
         </div>
@@ -93,15 +122,15 @@ watch(
           <app-date-picker
             v-model="formModel.birth"
             :label="t('inputFields.birth')"
-            :placeholder="t('inputFields.birthdayPlaceholder')"
+            :placeholder="t('inputFields.birthPlaceholder')"
             :rules="formRules.birth"
           />
         </div>
         <app-input
-          v-model="formModel.full_address"
-          :label="t('inputFields.fullAddress')"
-          :placeholder="t('inputFields.fullAddressPlaceholder')"
-          :rules="formRules.full_address"
+          v-model="formModel.address"
+          :label="t('inputFields.address')"
+          :placeholder="t('inputFields.addressPlaceholder')"
+          :rules="formRules.address"
           type="textarea"
           show-word-limit
           rows="4"
@@ -118,8 +147,16 @@ watch(
           v-model="formModel.mobile"
           type="text"
           :label="t('inputFields.mobile')"
-          :placeholder="t('inputFields.phonePlaceholder')"
+          :placeholder="t('inputFields.mobilePlaceholder')"
         />
+        <app-select
+          v-if="!isUser"
+          v-model="formModel.role"
+          :columns="genderList"
+          :label="t('inputFields.role')"
+          :placeholder="t('inputFields.rolePlaceholder')"
+          :rules="formRules.role"
+        ></app-select>
       </div>
       <div class="space-y-6">
         <div class="flex gap-x-2">
@@ -228,6 +265,22 @@ watch(
             <van-stepper v-model="formModel.accompanying_count" min="1" />
           </div>
         </div>
+      </div>
+      <div class="bg-white rounded-xl p-6 flex justify-between items-center">
+        <div class="flex flex-col gap-y-2">
+          <span>
+            {{ t('registrationForm.total') }}
+            {{ formModel.entourage_num + 1 }}
+            {{ t('registrationForm.person') }}
+          </span>
+          <span>
+            <span class="font-bold font-base">{{ t('registrationForm.grandTotal') }}</span>
+            <span class="text-[--warning-color]">${{ 50 * (formModel.entourage_num + 1) }}</span>
+          </span>
+        </div>
+        <van-button native-type="submit" style="width: 100px" round color="#ff6418">{{
+          t('registrationForm.payment')
+        }}</van-button>
       </div>
     </div>
   </van-form>

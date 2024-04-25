@@ -16,7 +16,7 @@ export const APP_ROUTE_PATHS = {
   LOGIN: 'login',
   COUNTRY_REGION_LIST: 'country-region-list',
   RESET_PASSWORD: 'reset-password',
-  PLAYER_REGISTRATION_FORM: 'player-registration-form',
+  PLAYER_REGISTRATION_FORM: 'personal-registration-form',
   COACH_REGISTRATION_FORM: 'coach-registration-form',
   REGISTRATION_LIST: 'registration-list',
   PAYMENT: 'payment',
@@ -55,4 +55,24 @@ export const SEND_EMAIL_CODE_TYPE = {
 
 export const CODE_TYPE = {
   ERROR: 'Error'
+}
+
+export const ROLE_LIST = [
+  {
+    text: '选手',
+    value: 'personal'
+  },
+  {
+    text: '教练',
+    value: 'coach'
+  },
+  {
+    text: '馆校长',
+    value: 'headmaster'
+  }
+]
+
+export const ORDER_TYPE = {
+  USER: 'user',
+  ORGANIZE: 'organize'
 }

@@ -7,36 +7,21 @@ import AppInput from '@/components/widgets/AppInput.vue'
 import { intersection } from 'lodash-es'
 import { requestGet } from '@/lib/request'
 import { REQUEST_URL } from '@/lib/const'
+import { useRegistrationStore } from '@/store/registration'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
-const items = ref([
-  {
-    text: '浙江',
-    children: [
-      { text: '杭州', id: 1 },
-      { text: '温州', id: 2 },
-      { text: '宁波', id: 3, disabled: true }
-    ]
-  },
-  {
-    text: '江苏',
-    children: [
-      { text: '南京', id: 4 },
-      { text: '无锡', id: 5 },
-      { text: '徐州', id: 6 }
-    ]
-  },
-  { text: '福建', disabled: true, children: [] }
-])
+const router = useRouter()
+const store = useRegistrationStore()
+const { formModel } = storeToRefs(store)
 
+const items = ref([])
 const activeIds = ref([])
 const activeIndex = ref(0)
 const tab = ref('sl')
-
 const search = ref('')
-
 const addText = ref('')
-
 const addedList = ref([])
 
 const isSlTab = computed(() => tab.value === 'sl')
@@ -99,9 +84,6 @@ const initData = () => {
     })
   })
 }
-
-initData()
-
 const handleAddByManual = () => {
   const addTextValue = addText.value
   if (!addTextValue.trim()) {
@@ -112,7 +94,6 @@ const handleAddByManual = () => {
   }
   addedList.value.push(addTextValue)
 }
-
 const handleSpliceActiveIds = (id) => {
   const findIndex = activeIds.value.findIndex((item) => item === id)
   if (findIndex === -1) {
@@ -121,9 +102,17 @@ const handleSpliceActiveIds = (id) => {
     activeIds.value.splice(findIndex, 1)
   }
 }
-
-const handleClear = () => {}
-const confirmAdd = () => {}
+const handleClear = () => {
+  activeIds.value = []
+  addedList.value = []
+  activeIndex.value = 0
+}
+const confirmAdd = () => {
+  formModel.project_id = activeIds.value
+  formModel.custom_project = addedList
+  router.back()
+}
+initData()
 </script>
 <template>
   <BaseContentLayout :title="t('slTechniques.title')" class="space-y-4">

@@ -64,8 +64,8 @@ const handleSubmit = () => {
         <div class="grid grid-cols-1 gap-y-6 gap-x-4 lg:grid-cols-2">
           <app-input
             v-model="formModel.name"
-            :label="t('inputFields.firstName')"
-            :placeholder="t('inputFields.firstNamePlaceholder')"
+            :label="t('inputFields.name')"
+            :placeholder="t('inputFields.namePlaceholder')"
             :rules="formRules.name"
           />
           <app-input
@@ -86,7 +86,7 @@ const handleSubmit = () => {
           <app-date-picker
             v-model="formModel.birth"
             :label="t('inputFields.birth')"
-            :placeholder="t('inputFields.birthdayPlaceholder')"
+            :placeholder="t('inputFields.birthPlaceholder')"
             :rules="formRules.birth"
           />
         </div>

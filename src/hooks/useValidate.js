@@ -23,7 +23,14 @@ export default function useValidate(fields) {
         pattern: verificationCodeRegex,
         message: '请输入六位验证码'
       }
-    ]
+    ],
+    mobile: [{ required: true, message: '请填写电话号码' }],
+    role: [{ required: true, message: '请填写身份信息' }],
+    address: [{ required: true, message: '请填写身份信息' }],
+    organize_name: [{ required: true, message: '请填写单位名称' }],
+    organize_head: [{ required: true, message: '请填写负责人名称' }],
+    organize_address: [{ required: true, message: '请填写单位地址' }],
+    organize_contact: [{ required: true, message: '请填写联系方式' }]
   })
 
   const formRules = computed(() => {

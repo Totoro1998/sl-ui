@@ -3,7 +3,7 @@ export default {
   message: {
     vantLocale: enUS,
     register: {
-      firstName: 'First Name',
+      name: 'First Name',
       surName: 'Surname',
       gender: 'Gender',
       birth: 'Birthday',
