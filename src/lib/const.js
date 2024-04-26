@@ -73,6 +73,6 @@ export const ROLE_LIST = [
 ]
 
 export const ORDER_TYPE = {
-  USER: 'user',
+  USER: 'personal',
   ORGANIZE: 'organize'
 }

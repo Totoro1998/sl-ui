@@ -62,7 +62,7 @@ export const router = createRouter({
         },
         {
           path: APP_ROUTE_PATHS.PAYMENT,
-          name: 'REGISTRATION_LIST',
+          name: 'PAYMENT',
           component: () => import('@/views/Payment.vue')
         },
         {

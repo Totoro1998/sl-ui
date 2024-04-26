@@ -3,10 +3,15 @@ import AppHeader from './components/AppHeader.vue'
 import AppContent from './components/AppContent.vue'
 import AppFooter from './components/AppFooter.vue'
 import { useRouter } from 'vue-router'
+import { useCommonStore } from '@/store/common'
 import { ref } from 'vue'
 
 const router = useRouter()
 const wrapperRef = ref(null)
+
+const { setCommonStore } = useCommonStore()
+
+setCommonStore()
 
 router.beforeEach((to, from, next) => {
   wrapperRef.value &&

@@ -2,17 +2,20 @@
 import { storeToRefs } from 'pinia'
 import { useI18n } from '@/hooks/useI18n'
 import { useCountryStore } from '@/store/country'
-import { computed, watch } from 'vue'
+import { useCommonStore } from '@/store/common'
+import { computed, watch, ref } from 'vue'
 import { useRegistrationStore } from '@/store/registration'
+import useValidate from '@/hooks/useValidate'
+import { requestPost } from '@/lib/request'
+import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
+import { useProjectsStore } from '@/store/projects'
+import { omit } from 'lodash-es'
 import AppInput from '../widgets/AppInput.vue'
 import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
-import useValidate from '@/hooks/useValidate'
 import AppTelInput from '../widgets/AppTelInput.vue'
-import { requestPost } from '@/lib/request'
-import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
-import { ref } from 'vue'
-import { omit } from 'lodash-es'
+import AppLink from '../widgets/AppLink.vue'
+import { useRouter } from 'vue-router'
 
 const genderList = [
   {
@@ -26,18 +29,39 @@ const genderList = [
 ]
 const props = defineProps(['type'])
 const { t } = useI18n()
+const router = useRouter()
 const countryStore = useCountryStore()
 const store = useRegistrationStore()
 const { formModel } = storeToRefs(store)
+const projectsStore = useProjectsStore()
+const commonStore = useCommonStore()
+const { projectSetting } = storeToRefs(projectsStore)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
 const uploadFileId = ref('')
 
 const country = computed(() => countryStore.country)
 const isUser = computed(() => props.type === ORDER_TYPE.USER)
-const handleDeleteProject = (index) => {
-  formModel.value.projects.splice(index, 1)
-}
+const shaolinTechniqueList = computed(() => commonStore.shaolinTechniqueList)
+
+const projects = computed(() => {
+  return projectSetting.value.project_id.map((id) => {
+    const item = {}
+    for (let i = 0; i < shaolinTechniqueList.value.length; i++) {
+      const parent = shaolinTechniqueList.value[i]
+      for (let j = 0; j < parent.children.length; j++) {
+        const child = parent.children[j]
+        if (child.id === id) {
+          item.parentName = parent.text
+          item.id = child.id
+          item.name = child.text
+          break
+        }
+      }
+    }
+    return item
+  })
+})
 const afterRead = (file) => {
   const formData = new FormData()
   formData.append('file', file.file)
@@ -51,7 +75,7 @@ const afterRead = (file) => {
 }
 
 const handleSubmit = () => {
-  let params = { ...formModel }
+  let params = { ...formModel.value, ...projectSetting.value }
   params.headimg = uploadFileId.value
   params.organize_info = {
     organize_name: params.organize_name,
@@ -66,12 +90,15 @@ const handleSubmit = () => {
   } else {
     params.type = ORDER_TYPE.ORGANIZE
   }
+  requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
+    console.log(res)
+  })
 }
 
 watch(
   country,
   () => {
-    formModel.value.country_or_region = country.value.alpha3
+    formModel.value.country = country.value.alpha3
   },
   {
     immediate: true
@@ -126,6 +153,15 @@ watch(
             :rules="formRules.birth"
           />
         </div>
+        <app-input
+          :modelValue="country.en"
+          :label="t('inputFields.countryOrRegion')"
+          :placeholder="t('inputFields.countryOrRegionPlaceholder')"
+          readonly
+          is-link
+          @click="router.push({ name: 'COUNTRY_REGION_LIST' })"
+          :rules="formRules.country"
+        />
         <app-input
           v-model="formModel.address"
           :label="t('inputFields.address')"
@@ -194,7 +230,7 @@ watch(
           :rules="formRules.organize_contact"
         />
       </div>
-      <div>
+      <div class="space-y-6">
         <div class="flex gap-x-2">
           <span
             class="flex items-center bg-[--success-color] text-white justify-center rounded-full h-6 w-6"
@@ -208,33 +244,54 @@ watch(
         <div class="border-t border-b">
           <div
             class="py-3 space-y-1 border-b last:border-none"
-            v-for="(project, index) in formModel.projects"
-            :key="project.id || project.uuid"
+            v-for="(project, index) in projects"
+            :key="project.id"
           >
             <div class="flex justify-between gap-x-4">
               <span class="space-x-2">
-                <span>{{ project.type }}</span>
+                <span>{{ project.parentName }}</span>
                 <span
-                  v-if="project.id"
                   class="text-[--warning-color] rounded-full px-2 py-1 text-[12px] font-medium bg-[--waring-light-color]"
                   >{{ project.id }}</span
                 >
               </span>
-              <span role="button" class="cursor-pointer" @click="handleDeleteProject(index)">
+              <span
+                role="button"
+                class="cursor-pointer"
+                @click="projectSetting.project_id.splice(index, 1)"
+              >
                 <van-icon size="20" name="clear" color="#F5222D" />
               </span>
             </div>
-            <div class="text-[--primary-second-color] text-[14px]" v-if="project.id">
+            <div class="text-[--primary-second-color] text-[14px]">
               {{ project.name }}
             </div>
           </div>
-          <div class="flex justify-between py-3 items-center">
+          <div
+            class="py-3 space-y-1 border-b last:border-none"
+            v-for="(project, index) in projectSetting.custom_project"
+            :key="project"
+          >
+            <div class="flex justify-between gap-x-4">
+              <span class="space-x-2">
+                <span>{{ project }}</span>
+              </span>
+              <span
+                role="button"
+                class="cursor-pointer"
+                @click="projectSetting.custom_project.splice(index, 1)"
+              >
+                <van-icon size="20" name="clear" color="#F5222D" />
+              </span>
+            </div>
+          </div>
+          <app-link class="flex justify-between py-3 items-center" to="/shaolin-techniques">
             <button class="flex items-center gap-x-2">
               <van-icon name="add" size="20" color="#8D8BA7" />
               {{ t('registrationForm.addProject') }}
             </button>
             <van-icon name="arrow" />
-          </div>
+          </app-link>
         </div>
       </div>
       <div class="space-y-6">
@@ -259,10 +316,10 @@ watch(
           <div class="h-[56px] flex items-center bg-white rounded-full px-4 justify-between">
             <span class="text-[--primary-second-color]">
               {{ t('registrationForm.alreadySelect') }}
-              {{ formModel.accompanying_count }}
+              {{ formModel.entourage_num }}
               {{ t('registrationForm.person') }}
             </span>
-            <van-stepper v-model="formModel.accompanying_count" min="1" />
+            <van-stepper v-model="formModel.entourage_num" :min="0" />
           </div>
         </div>
       </div>

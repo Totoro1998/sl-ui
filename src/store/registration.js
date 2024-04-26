@@ -10,6 +10,7 @@ const DEFAULT_FORM_MODEL = {
   birth: '',
   country: '',
   code: '',
+  address: '',
   email: '',
   mobile: '',
   role: '',

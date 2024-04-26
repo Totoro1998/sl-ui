@@ -22,3 +22,13 @@ export function copyToClipboard(text, callback) {
     document.body.removeChild(textArea)
   }
 }
+
+export function splitPhoneNumber(input) {
+  const regex = /^(\+\d{1,3})\s*(\d+)$/
+  const match = input.match(regex)
+  if (match) {
+    return [match[1], match[2]]
+  } else {
+    return null
+  }
+}

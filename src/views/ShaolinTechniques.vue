@@ -1,22 +1,21 @@
 <script setup>
-import { ref } from 'vue'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import { useI18n } from '@/hooks/useI18n'
-import { computed } from 'vue'
+import { computed, watch, ref } from 'vue'
 import AppInput from '@/components/widgets/AppInput.vue'
 import { intersection } from 'lodash-es'
-import { requestGet } from '@/lib/request'
-import { REQUEST_URL } from '@/lib/const'
-import { useRegistrationStore } from '@/store/registration'
+import { useCommonStore } from '@/store/common'
+import { useProjectsStore } from '@/store/projects'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const router = useRouter()
-const store = useRegistrationStore()
-const { formModel } = storeToRefs(store)
 
-const items = ref([])
+const commonStore = useCommonStore()
+const projectsStore = useProjectsStore()
+const { projectSetting } = storeToRefs(projectsStore)
+
 const activeIds = ref([])
 const activeIndex = ref(0)
 const tab = ref('sl')
@@ -24,8 +23,8 @@ const search = ref('')
 const addText = ref('')
 const addedList = ref([])
 
+const shaolinTechniqueList = computed(() => commonStore.shaolinTechniqueList)
 const isSlTab = computed(() => tab.value === 'sl')
-
 const tabList = computed(() => {
   return [
     {
@@ -38,10 +37,9 @@ const tabList = computed(() => {
     }
   ]
 })
-
 const displayItems = computed(() => {
   const searchValue = search.value
-  let filterItems = items.value
+  let filterItems = shaolinTechniqueList.value
     .map((item) => {
       return {
         ...item,
@@ -66,33 +64,17 @@ const displayItems = computed(() => {
   })
   return filterItems
 })
-
 const currentTreeItem = computed(() => {
   return displayItems.value[activeIndex.value]
 })
 
-const initData = () => {
-  requestGet(REQUEST_URL.PROJECT_LIST).then((res) => {
-    items.value = res.data.map((item) => {
-      item.id = item.code
-      item.text = item.name
-      item.children = item.children.map((c) => {
-        ;(c.id = c.code), (c.text = c.name)
-        return c
-      })
-      return item
-    })
-  })
-}
 const handleAddByManual = () => {
   const addTextValue = addText.value
-  if (!addTextValue.trim()) {
-    return
-  }
-  if (addedList.value.includes(addTextValue)) {
+  if (!addTextValue.trim() || addedList.value.includes(addTextValue)) {
     return
   }
   addedList.value.push(addTextValue)
+  addText.value = ''
 }
 const handleSpliceActiveIds = (id) => {
   const findIndex = activeIds.value.findIndex((item) => item === id)
@@ -103,16 +85,29 @@ const handleSpliceActiveIds = (id) => {
   }
 }
 const handleClear = () => {
-  activeIds.value = []
-  addedList.value = []
+  projectSetting.value = {
+    project_id: [],
+    custom_project: []
+  }
   activeIndex.value = 0
 }
 const confirmAdd = () => {
-  formModel.project_id = activeIds.value
-  formModel.custom_project = addedList
+  projectSetting.value = {
+    project_id: activeIds.value,
+    custom_project: addedList.value
+  }
   router.back()
 }
-initData()
+watch(
+  projectSetting,
+  (value) => {
+    activeIds.value = value.project_id
+    addedList.value = value.custom_project
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 <template>
   <BaseContentLayout :title="t('slTechniques.title')" class="space-y-4">
