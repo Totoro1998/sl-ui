@@ -19,14 +19,15 @@ export const APP_ROUTE_PATHS = {
   PLAYER_REGISTRATION_FORM: 'personal-registration-form',
   COACH_REGISTRATION_FORM: 'coach-registration-form',
   REGISTRATION_LIST: 'registration-list',
+  REGISTRATION_DETAIL: 'registration-detail',
   PAYMENT: 'payment',
   SHAOLIN_TECHNIQUES: 'shaolin-techniques',
   ACTIVE_EMAIL: 'active-email'
 }
 
 export const GENDER = {
-  FEMALE: 'female',
-  MALE: 'male'
+  FEMALE: 2,
+  MALE: 1
 }
 
 export const REQUEST_URL = {
