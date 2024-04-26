@@ -93,6 +93,10 @@ export default {
       edit: '编辑',
       registerForCompetition: '报名参赛'
     },
+    registrationList: {
+      personal: '我是选手',
+      organize: '我是教练/馆校长'
+    },
     registrationForm: {
       playerTitle: '参赛选手报名表',
       coachTitle: '教练/校长报名表',
