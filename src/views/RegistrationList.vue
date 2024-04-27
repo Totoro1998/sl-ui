@@ -5,10 +5,12 @@ import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
 import BaseContentLayout from '@/components/page/BaseContentLayout.vue'
 import RegistrationCard from '@/components/page/RegistrationCard.vue'
 import { requestGet } from '@/lib/request'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const list = ref([])
 const tab = ref(ORDER_TYPE.USER)
+const router = useRouter()
 const isUserTab = computed(() => tab.value === ORDER_TYPE.USER)
 
 const tabList = computed(() => {
@@ -27,9 +29,16 @@ const tabList = computed(() => {
 const getRegistrationList = () => {
   requestGet(`${REQUEST_URL.ORDER_LIST}?type=${tab.value}`).then((res) => {
     list.value = res.data.data
-    console.log(list.value)
   })
 }
+const handleCreate = () => {
+  if (isUserTab.value) {
+    router.push({ name: 'PLAYER_REGISTRATION_FORM' })
+  } else {
+    router.push({ name: 'COACH_REGISTRATION_FORM' })
+  }
+}
+
 watch(tab, getRegistrationList)
 
 getRegistrationList()
@@ -57,6 +66,11 @@ getRegistrationList()
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <RegistrationCard v-for="item in list" :key="item.order_no" :item="item" />
+    </div>
+    <div class="flex items-center justify-center mt-6 w-full">
+      <van-button round color="#ff6418" size="normal" @click="handleCreate" style="width: 200px">
+        {{ t('signUpDetail.registerForCompetition') }}
+      </van-button>
     </div>
   </BaseContentLayout>
 </template>

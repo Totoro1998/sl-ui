@@ -307,6 +307,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
         />
         <app-tel-input
           :disabled="!isEdit"
+          :country="country.alpha3"
           v-model="formModel.mobile"
           type="text"
           :label="t('inputFields.mobile')"

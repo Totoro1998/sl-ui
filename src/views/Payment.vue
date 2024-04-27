@@ -51,8 +51,7 @@ const handleSubmit = () => {
   requestPost(REQUEST_URL.SUBMIT_PAYINFO, {
     orderNo: props.id,
     evidences
-  }).then((res) => {
-    console.log(res)
+  }).then(() => {
     router.push({
       name: 'REGISTRATION_DETAIL',
       params: {
