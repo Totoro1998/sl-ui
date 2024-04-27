@@ -14,22 +14,38 @@ const { t } = useI18n()
 
 const router = useRouter()
 
+const props = defineProps(['type'])
+
 const sendEmailSetting = LocalStorage.getItem(STORAGE_KEY.SEND_EMAIL)
 
 const code = ref('')
 
 const formRules = useValidate(['code'])
 
+const handleRegistration = () => {
+  const data = sendEmailSetting.data
+  requestPost(REQUEST_URL.ORDER_SUBMIT, { ...data, code: code.value }).then((res) => {
+    LocalStorage.removeItem(STORAGE_KEY.SEND_EMAIL)
+    router.push({
+      name: 'PAYMENT',
+      params: {
+        id: res.data.orderId
+      }
+    })
+  })
+}
+
 const resendEmailCode = () => {
   requestPost(REQUEST_URL.SEND_EMAIL_CODE, {
     email: sendEmailSetting.email,
-    type: SEND_EMAIL_CODE_TYPE.ACTIVE_EMAIL
+    type: SEND_EMAIL_CODE_TYPE.AUTH
   })
 }
 
 const handleSubmit = () => {
-  const callback = new Function('return (' + sendEmailSetting.callback + ')')()
-  callback && callback(code.value)
+  if (props.type === 'registration') {
+    handleRegistration()
+  }
 }
 
 if (!sendEmailSetting.email) {

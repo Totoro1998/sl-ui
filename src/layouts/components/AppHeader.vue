@@ -6,14 +6,17 @@ import AppLink from '@/components/widgets/AppLink.vue'
 import { requestPost } from '@/lib/request'
 import { REQUEST_URL } from '@/lib/const'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const store = useAuthStore()
 const { userInfo } = storeToRefs(store)
+const router = useRouter()
 
 const handleLogout = () => {
   requestPost(REQUEST_URL.LOGOUT).then(() => {
     store.setUserInfo(DEFAULT_USER_INFO)
+    router.push('/')
   })
 }
 </script>

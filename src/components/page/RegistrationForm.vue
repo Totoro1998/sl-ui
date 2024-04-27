@@ -149,24 +149,19 @@ const handleSubmit = async (type) => {
   if (!authStore.userInfo.email) {
     const sendEmailSetting = {
       email: params.email,
-      callback: ((code) => {
-        requestPost(REQUEST_URL.ORDER_SUBMIT, { ...params, code }).then((res) => {
-          LocalStorage.removeItem(STORAGE_KEY.SEND_EMAIL)
-          router.push({
-            name: 'PAYMENT',
-            params: {
-              id: res.data.orderId
-            }
-          })
-        })
-      }).toString()
+      data: params
     }
     LocalStorage.setItem(STORAGE_KEY.SEND_EMAIL, sendEmailSetting)
     requestPost(REQUEST_URL.SEND_EMAIL_CODE, {
       email: sendEmailSetting.email,
-      type: SEND_EMAIL_CODE_TYPE.ACTIVE_EMAIL
+      type: SEND_EMAIL_CODE_TYPE.AUTH
     })
-    router.push({ name: 'SEND_EMAIL' })
+    router.push({
+      name: 'SEND_EMAIL',
+      params: {
+        type: 'registration'
+      }
+    })
   } else {
     requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
       router.push({
@@ -219,6 +214,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
 </script>
 <template>
   <van-form
+    validate-trigger="onSubmit"
     ref="RegistrationFormRef"
     class="registration-form"
     :disabled="!isEdit"

@@ -17,7 +17,8 @@ const telValue = computed(() => {
   if (!model.value) {
     return ''
   }
-  return splitPhoneNumber(model.value)[1]
+  const array = splitPhoneNumber(model.value)
+  return array ? array[1] : ''
 })
 
 const currentCountry = computed(() => {
