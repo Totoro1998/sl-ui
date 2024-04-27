@@ -19,6 +19,10 @@ function requestErrorInterceptor(error) {
 }
 
 function responseSuccessInterceptor(response) {
+  const code = response.data.code
+  if (code === 401) {
+    window.location.href = '/login'
+  }
   return response.data
 }
 function responseErrorInterceptor(error) {

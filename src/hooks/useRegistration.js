@@ -26,6 +26,7 @@ export default function useRegistration() {
           icon: 'checked'
         }
         break
+      case REGISTRATION_STATUS.WAIT_AUDITING:
       case REGISTRATION_STATUS.WAIT_SUBMIT:
         statusSetting = {
           color: 'rgb(40, 120, 255)',

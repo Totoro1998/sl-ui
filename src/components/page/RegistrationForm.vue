@@ -186,6 +186,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
 </script>
 <template>
   <van-form
+    class="registration-form"
     validate-trigger="onSubmit"
     @submit="handleSubmit"
     :disabled="!isEdit"
@@ -450,3 +451,12 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
     </div>
   </van-form>
 </template>
+
+<style lang="less">
+.registration-form {
+  .van-uploader .van-uploader__preview-image {
+    width: 144px;
+    height: 144px;
+  }
+}
+</style>
