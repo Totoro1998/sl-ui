@@ -31,7 +31,7 @@ const statusSetting = computed(() => {
   >
     <div class="border-b px-4 py-3 flex justify-between">
       <span class="flex gap-x-2 items-center text-sm">
-        {{ t('signUpDetail.slogan') }}
+        {{ item.gameInfo.game_name }}
         <van-icon size="16" name="arrow" />
       </span>
       <span

@@ -3,19 +3,21 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from '@/hooks/useI18n'
 import { useCountryStore } from '@/store/country'
 import { useCommonStore } from '@/store/common'
+import appCountryList from '@/lib/countries'
 import { computed, watch, ref } from 'vue'
 import { useRegistrationStore } from '@/store/registration'
 import useValidate from '@/hooks/useValidate'
 import { requestPost } from '@/lib/request'
 import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
 import { useProjectsStore } from '@/store/projects'
-import { omit } from 'lodash-es'
+import { pick } from 'lodash-es'
 import AppInput from '../widgets/AppInput.vue'
 import AppSelect from '@/components/widgets/AppSelect.vue'
 import AppDatePicker from '@/components/widgets/AppDatePicker.vue'
 import AppTelInput from '../widgets/AppTelInput.vue'
-import AppLink from '../widgets/AppLink.vue'
 import { useRouter } from 'vue-router'
+import { isEmptyData } from '@/lib/util'
+import { REGISTRATION_STATUS } from '@/hooks/useRegistration'
 
 const genderList = [
   {
@@ -27,8 +29,18 @@ const genderList = [
     value: 2
   }
 ]
-const props = defineProps(['type', 'initData', 'actionType'])
 
+const props = defineProps({
+  type: {
+    default: ORDER_TYPE.USER
+  },
+  initData: {
+    default: () => {}
+  },
+  isEdit: {
+    default: true
+  }
+})
 const { t } = useI18n()
 const router = useRouter()
 const countryStore = useCountryStore()
@@ -39,13 +51,15 @@ const { projectSetting } = storeToRefs(projectsStore)
 const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
-const uploadFileId = ref('')
 const fileList = ref([])
 
 const country = computed(() => countryStore.country)
-const isUser = computed(() => props.type === ORDER_TYPE.USER)
+const isUser = computed(
+  () =>
+    props.type === ORDER_TYPE.USER ||
+    (props.initData.role && props.initData.role.value === ORDER_TYPE.USER)
+)
 const shaolinTechniqueList = computed(() => commonStore.shaolinTechniqueList)
-
 const projects = computed(() => {
   return projectSetting.value.project_id.map((id) => {
     const item = {}
@@ -64,6 +78,16 @@ const projects = computed(() => {
     return item
   })
 })
+const statusValue = computed(() => {
+  if (formModel.value.status) {
+    return formModel.value.status.value
+  }
+  return ''
+})
+const notPaied = computed(() => {
+  return !formModel.value.order_no || statusValue.value === REGISTRATION_STATUS.WAIT_SUBMIT
+})
+
 const afterRead = (file) => {
   const formData = new FormData()
   formData.append('file', file.file)
@@ -72,29 +96,73 @@ const afterRead = (file) => {
       'Content-Type': 'multipart/form-data'
     }
   }).then((res) => {
-    uploadFileId.value = res.data.hash
+    formModel.value.headimg = res.data.hash
   })
 }
-
 const handleSubmit = () => {
+  if (formModel.value.order_no) {
+    router.push({
+      name: 'PAYMENT',
+      params: {
+        id: formModel.value.order_no
+      }
+    })
+    return
+  }
   let params = { ...formModel.value, ...projectSetting.value }
-  params.headimg = uploadFileId.value
   params.organize_info = {
     organize_name: params.organize_name,
     organize_head: params.organize_head,
     organize_address: params.organize_address,
     organize_contact: params.organize_contact
   }
-  params = omit(params, ['organize_name', 'organize_head', 'organize_address', 'organize_contact'])
   if (isUser.value) {
     params.type = ORDER_TYPE.USER
     params.role = 'personal'
   } else {
     params.type = ORDER_TYPE.ORGANIZE
   }
+  params = pick(params, [
+    'order_no',
+    'role',
+    'type',
+    'headimg',
+    'name',
+    'surname',
+    'gender',
+    'birth',
+    'country',
+    'address',
+    'email',
+    'code',
+    'mobile',
+    'organize_info',
+    'project_id',
+    'custom_project',
+    'organize_project_id',
+    'entourage_num'
+  ])
   requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
     console.log(res)
   })
+}
+const handleSetValueFromInit = (value) => {
+  formModel.value = {
+    ...formModel.value,
+    ...value,
+    ...value.organize_info
+  }
+
+  if (!isEmptyData(value)) {
+    const findItem = appCountryList.find((item) => item.value === value.country)
+    countryStore.setCountry(findItem)
+    fileList.value = [{ url: value.headimg.url }]
+    formModel.value.headimg = value.headimg.hash
+    projectSetting.value = {
+      project_id: value ? value.projectInfo.map((item) => item.code) : [],
+      custom_project: value ? value.custom_project : []
+    }
+  }
 }
 
 watch(
@@ -106,25 +174,23 @@ watch(
     immediate: true
   }
 )
-
 watch(
   () => props.initData,
   (value) => {
-    formModel.value = {
-      ...formModel.value,
-      ...value,
-      ...(value ? value.organize_info : {})
-    }
-    projectSetting.value = {
-      project_id: value ? value.projectInfo.map((item) => item.code) : [],
-      custom_project: value ? value.custom_project : []
-    }
+    handleSetValueFromInit(value)
   },
   { immediate: true }
 )
+
+defineExpose({ handleSubmit, handleSetValueFromInit })
 </script>
 <template>
-  <van-form validate-trigger="onSubmit" @submit="handleSubmit" label-align="top">
+  <van-form
+    validate-trigger="onSubmit"
+    @submit="handleSubmit"
+    :disabled="!isEdit"
+    label-align="top"
+  >
     <div class="space-y-6">
       <div class="space-y-6">
         <div class="flex gap-x-2">
@@ -207,6 +273,7 @@ watch(
           :rules="formRules.email"
         />
         <app-tel-input
+          :disabled="!isEdit"
           v-model="formModel.mobile"
           type="text"
           :label="t('inputFields.mobile')"
@@ -285,6 +352,7 @@ watch(
               <span
                 role="button"
                 class="cursor-pointer"
+                v-if="isEdit"
                 @click="projectSetting.project_id.splice(index, 1)"
               >
                 <van-icon size="20" name="clear" color="#F5222D" />
@@ -304,6 +372,7 @@ watch(
                 <span>{{ project }}</span>
               </span>
               <span
+                v-if="isEdit"
                 role="button"
                 class="cursor-pointer"
                 @click="projectSetting.custom_project.splice(index, 1)"
@@ -312,13 +381,17 @@ watch(
               </span>
             </div>
           </div>
-          <app-link class="flex justify-between py-3 items-center" to="/shaolin-techniques">
-            <button class="flex items-center gap-x-2">
+          <button
+            @click="router.push({ name: 'SHAOLIN_TECHNIQUES' })"
+            :disabled="!isEdit"
+            class="flex justify-between w-full py-3 items-center cursor-pointer"
+          >
+            <span class="flex items-center gap-x-2">
               <van-icon name="add" size="20" color="#8D8BA7" />
               {{ t('registrationForm.addProject') }}
-            </button>
+            </span>
             <van-icon name="arrow" />
-          </app-link>
+          </button>
         </div>
       </div>
       <div class="space-y-6">
@@ -346,10 +419,11 @@ watch(
               {{ formModel.entourage_num }}
               {{ t('registrationForm.person') }}
             </span>
-            <van-stepper v-model="formModel.entourage_num" :min="0" />
+            <van-stepper :disabled="!isEdit" v-model="formModel.entourage_num" :min="0" />
           </div>
         </div>
       </div>
+      <slot name="actionButton"></slot>
       <div class="bg-white rounded-xl p-6 flex justify-between items-center">
         <div class="flex flex-col gap-y-2">
           <span>
@@ -362,9 +436,16 @@ watch(
             <span class="text-[--warning-color]">${{ 50 * (formModel.entourage_num + 1) }}</span>
           </span>
         </div>
-        <van-button native-type="submit" style="width: 100px" round color="#ff6418">{{
-          t('registrationForm.payment')
-        }}</van-button>
+        <van-button
+          :disabled="!notPaied"
+          native-type="submit"
+          :style="{ width: '100px', color: notPaied ? 'white' : '#8D8BA7' }"
+          round
+          :color="notPaied ? '#ff6418' : '#D4D2E3'"
+          >{{
+            notPaied ? t('registrationForm.payment') : t('participantRegistrationDetail.paied')
+          }}</van-button
+        >
       </div>
     </div>
   </van-form>

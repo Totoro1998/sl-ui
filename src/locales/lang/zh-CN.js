@@ -108,13 +108,17 @@ export default {
       accompanyingPersonnelCount: '随行人员人数',
       total: '共',
       payment: '支付',
+
       paymentSuccess: '支付成功',
       grandTotal: '合计：',
       deducted: '已减扣',
       saveDraft: '暂存草稿',
       viewRegistrationInfo: '查看报名信息',
       alreadySelect: '已选择',
-      person: '人'
+      person: '人',
+      edit: '编辑',
+      cancel: '取消',
+      save: '保存'
     },
     competingEvents: {
       title: '选择参赛项目',
@@ -129,7 +133,7 @@ export default {
     participantRegistrationDetail: {
       title: '参赛选手报名表',
       passed: '已通过',
-      paid: '已支付',
+      paied: '已支付',
       downloadConfirmationLetter: '下载确认函'
     },
     payment: {

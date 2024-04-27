@@ -5,7 +5,13 @@ import { copyToClipboard } from '@/lib/util'
 import CopyIcon from '@/assets/icons/copy.svg'
 import DownloadIcon from '@/assets/icons/download.svg'
 import PayCode from '@/assets/images/paycode.webp'
+import { requestPost } from '@/lib/request'
+import { REQUEST_URL } from '@/lib/const'
+import { router } from '@/router'
 
+const props = defineProps(['id'])
+const uploadedList = ref([])
+const fileList = ref([])
 const paySetting = ref({
   amount: 50,
   email: 'test@gmail.com',
@@ -16,6 +22,45 @@ const paySetting = ref({
   pay_code_src: PayCode
 })
 const { t } = useI18n()
+
+const afterRead = (data) => {
+  let uploadFileList = data
+  if (!Array.isArray(uploadFileList)) {
+    uploadFileList = [data]
+  }
+  uploadFileList.forEach((file) => {
+    const formData = new FormData()
+    formData.append('file', file.file)
+    requestPost(REQUEST_URL.UPLOAD_IMAGE, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then((res) => {
+      uploadedList.value.push({
+        objectUrl: file.objectUrl,
+        headimg: res.data.hash
+      })
+    })
+  })
+}
+const handleSubmit = () => {
+  const evidences = fileList.value.map((item) => {
+    const fintItem = uploadedList.value.find((e) => e.objectUrl === item.objectUrl)
+    return fintItem.headimg
+  })
+  requestPost(REQUEST_URL.SUBMIT_PAYINFO, {
+    orderNo: props.id,
+    evidences
+  }).then((res) => {
+    console.log(res)
+    router.push({
+      name: 'REGISTRATION_DETAIL',
+      params: {
+        id: props.id
+      }
+    })
+  })
+}
 </script>
 <template>
   <div class="w-full mx-auto max-w-[564px] pt-12 pb-8 px-6 space-y-6">
@@ -168,15 +213,20 @@ const { t } = useI18n()
       <div class="divide-y border-t border-b">
         <div class="py-3 flex gap-x-2 items-start">
           <div class="flex-1 space-y-2">
-            <van-uploader v-model="paySetting.fileList" multiple />
+            <van-uploader v-model="fileList" :max-count="3" multiple :after-read="afterRead" />
           </div>
         </div>
       </div>
     </div>
     <div class="w-full flex items-center justify-center">
-      <van-button round color="#ff6418" style="width: 200px" class="rounded-full">{{
-        t('payment.finishPayment')
-      }}</van-button>
+      <van-button
+        round
+        color="#ff6418"
+        style="width: 200px"
+        class="rounded-full"
+        @click="handleSubmit"
+        >{{ t('payment.finishPayment') }}</van-button
+      >
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@ const columns = countryList.filter((country) => country.calling_code)
 const model = defineModel()
 const country = defineModel('country', { type: String, default: 'CHN' })
 
-defineProps(['placeholder,country'])
+defineProps(['placeholder', 'disabled'])
 
 const showPicker = ref(false)
 
@@ -54,11 +54,12 @@ const handleInput = (e) => {
       class="app-input app-tel-input"
       :model-value="telValue"
       @input="handleInput"
+      :disabled="disabled"
       v-bind="{ ...props, ...$attrs }"
       :border="false"
     >
       <template #button>
-        <button class="flex gap-x-2 items-center" @click="showPicker = true">
+        <button class="flex gap-x-2 items-center" :disabled="disabled" @click="showPicker = true">
           <span :class="`fi fi-${currentCountry.alpha2.toLowerCase()}`"></span>
           <span>{{ `+(${currentCountry.calling_code})` }}</span>
           <span :class="{ 'rotate-180 duration-150': showPicker }">

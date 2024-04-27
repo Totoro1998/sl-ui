@@ -12,6 +12,6 @@ const { t } = useI18n()
     <template #subTitle>
       <span class="text-[--warning-color]">{{ t('signUpDetail.slogan') }}</span>
     </template>
-    <RegistrationForm :type="ORDER_TYPE.USER" action-type="add" />
+    <RegistrationForm :type="ORDER_TYPE.USER" action-type="add"> </RegistrationForm>
   </BaseContentLayout>
 </template>

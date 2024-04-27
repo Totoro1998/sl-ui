@@ -1,3 +1,5 @@
+import { isEmpty, isNil } from 'lodash-es'
+
 export function copyToClipboard(text, callback) {
   try {
     navigator.clipboard
@@ -30,5 +32,20 @@ export function splitPhoneNumber(input) {
     return [match[1], match[2]]
   } else {
     return null
+  }
+}
+
+export function isEmptyData(data) {
+  if (typeof data === 'undefined') {
+    return true
+  }
+  if (isNil(data) || data === '') {
+    return true
+  } else if (typeof data === 'number' && isNaN(data)) {
+    return true
+  } else if (typeof data === 'object') {
+    return isEmpty(data)
+  } else {
+    return false
   }
 }

@@ -67,9 +67,10 @@ export const router = createRouter({
           props: true
         },
         {
-          path: APP_ROUTE_PATHS.PAYMENT,
+          path: `${APP_ROUTE_PATHS.PAYMENT}/:id`,
           name: 'PAYMENT',
-          component: () => import('@/views/Payment.vue')
+          component: () => import('@/views/Payment.vue'),
+          props: true
         },
         {
           path: APP_ROUTE_PATHS.SHAOLIN_TECHNIQUES,
