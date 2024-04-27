@@ -27,7 +27,8 @@ const genderList = [
     value: 2
   }
 ]
-const props = defineProps(['type'])
+const props = defineProps(['type', 'initData', 'actionType'])
+
 const { t } = useI18n()
 const router = useRouter()
 const countryStore = useCountryStore()
@@ -104,6 +105,22 @@ watch(
   {
     immediate: true
   }
+)
+
+watch(
+  () => props.initData,
+  (value) => {
+    formModel.value = {
+      ...formModel.value,
+      ...value,
+      ...(value ? value.organize_info : {})
+    }
+    projectSetting.value = {
+      project_id: value ? value.projectInfo.map((item) => item.code) : [],
+      custom_project: value ? value.custom_project : []
+    }
+  },
+  { immediate: true }
 )
 </script>
 <template>
@@ -259,7 +276,7 @@ watch(
           >
             <div class="flex justify-between gap-x-4">
               <span class="space-x-2">
-                <span>{{ project.parentName }}</span>
+                <span>{{ project.name }}</span>
                 <span
                   class="text-[--warning-color] rounded-full px-2 py-1 text-[12px] font-medium bg-[--waring-light-color]"
                   >{{ project.id }}</span
@@ -274,7 +291,7 @@ watch(
               </span>
             </div>
             <div class="text-[--primary-second-color] text-[14px]">
-              {{ project.name }}
+              {{ project.parentName }}
             </div>
           </div>
           <div

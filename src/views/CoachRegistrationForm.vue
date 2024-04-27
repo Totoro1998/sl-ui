@@ -5,6 +5,6 @@ import { ORDER_TYPE } from '@/lib/const'
 </script>
 <template>
   <BaseContentLayout>
-    <RegistrationForm :type="ORDER_TYPE.ORGANIZE" />
+    <RegistrationForm :type="ORDER_TYPE.ORGANIZE" action-type="add" />
   </BaseContentLayout>
 </template>
