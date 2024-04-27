@@ -32,13 +32,14 @@ const { t } = useI18n()
 const router = useRouter()
 const countryStore = useCountryStore()
 const store = useRegistrationStore()
-const { formModel } = storeToRefs(store)
 const projectsStore = useProjectsStore()
 const commonStore = useCommonStore()
 const { projectSetting } = storeToRefs(projectsStore)
+const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
 const uploadFileId = ref('')
+const fileList = ref([])
 
 const country = computed(() => countryStore.country)
 const isUser = computed(() => props.type === ORDER_TYPE.USER)
@@ -121,7 +122,16 @@ watch(
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-4">
           <div class="flex items-center justify-center">
-            <van-uploader v-model="fileList" :after-read="afterRead" />
+            <van-uploader :after-read="afterRead" max-count="1" v-model="fileList">
+              <div class="flex flex-col items-center gap-6">
+                <div
+                  class="bg-[#8D8BA7] rounded-full w-[144px] h-[144px] flex items-center justify-center"
+                >
+                  <van-icon name="contact" color="white" size="77" />
+                </div>
+                <span class="text-[#86909C] text-xs">上传照片，不得超过2M</span>
+              </div>
+            </van-uploader>
           </div>
           <div class="space-y-6">
             <app-input

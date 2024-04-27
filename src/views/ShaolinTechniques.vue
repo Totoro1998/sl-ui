@@ -135,6 +135,7 @@ watch(
         v-model:active-id="activeIds"
         v-model:main-active-index="activeIndex"
         :items="displayItems"
+        style="height: 600px"
       >
         <template #content>
           <div
@@ -193,7 +194,9 @@ watch(
         <van-icon name="cross" @click="addedList.splice(index, 1)" />
       </span>
     </div>
-    <div class="w-full flex items-center gap-x-2 justify-center">
+    <div
+      class="w-full fixed lg:static lg:bg-transparent lg:shadow-none lg:px-0 lg:py-0 bottom-0 flex bg-white left-0 right-0 px-6 py-3 shadow items-center gap-x-2 justify-center"
+    >
       <van-button
         @click="handleClear"
         color="rgb(252, 209, 188)"

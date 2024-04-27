@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
     class="w-full h-full overflow-y-scroll hidden-scrollbar relative pt-[--header-height] flex flex-col"
   >
     <AppHeader />
-    <div class="flex-1 flex flex-col bg-[#f2f2f7] mx-auto max-w-[--max-content-width]">
+    <div class="flex-1 flex flex-col bg-[#f2f2f7] mx-auto w-full max-w-[--max-content-width]">
       <AppContent />
     </div>
     <AppFooter />
