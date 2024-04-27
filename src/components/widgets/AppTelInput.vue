@@ -1,13 +1,25 @@
 <script setup>
-import { ref } from 'vue'
 import AppPopup from './AppPopup.vue'
 import countryList from '@/lib/countries'
-import { computed } from 'vue'
+import { splitPhoneNumber } from '@/lib/util'
+import { computed, ref, watch } from 'vue'
+
+const columns = countryList.filter((country) => country.calling_code)
 
 const model = defineModel()
 const country = defineModel('country', { type: String, default: 'CHN' })
 
-const columns = countryList.filter((country) => country.calling_code)
+defineProps(['placeholder', 'disabled'])
+
+const showPicker = ref(false)
+
+const telValue = computed(() => {
+  if (!model.value) {
+    return ''
+  }
+  const array = splitPhoneNumber(model.value)
+  return array ? array[1] : ''
+})
 
 const currentCountry = computed(() => {
   const findColumn = columns.find((column) => column.value === country.value)
@@ -23,13 +35,17 @@ const currentCountry = computed(() => {
   }
 })
 
-defineProps(['placeholder'])
-
-const showPicker = ref(false)
-
 const hanleConfirm = ({ selectedOptions }) => {
   country.value = selectedOptions[0].value
   showPicker.value = false
+}
+
+watch(currentCountry, (value) => {
+  model.value = `+${value.calling_code} ${telValue.value}`
+})
+
+const handleInput = (e) => {
+  model.value = `+${currentCountry.value.calling_code} ${e.target.value}`
 }
 </script>
 
@@ -37,12 +53,14 @@ const hanleConfirm = ({ selectedOptions }) => {
   <div>
     <van-field
       class="app-input app-tel-input"
-      v-model="model"
-      v-bind="{ ...props, ...$attrs }"
+      :model-value="telValue"
+      @input="handleInput"
+      :disabled="disabled"
+      :placeholder="placeholder"
       :border="false"
     >
       <template #button>
-        <button class="flex gap-x-2 items-center" @click="showPicker = true">
+        <button class="flex gap-x-2 items-center" :disabled="disabled" @click="showPicker = true">
           <span :class="`fi fi-${currentCountry.alpha2.toLowerCase()}`"></span>
           <span>{{ `+(${currentCountry.calling_code})` }}</span>
           <span :class="{ 'rotate-180 duration-150': showPicker }">

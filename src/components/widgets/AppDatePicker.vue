@@ -15,7 +15,6 @@ const hanleConfirm = ({ selectedValues }) => {
 watch(
   model,
   (value) => {
-    console.log(value)
     if (!value) {
       currentDate.value = []
       return

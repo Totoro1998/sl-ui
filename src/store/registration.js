@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const DEFAULT_FORM_MODEL = {
+export const DEFAULT_FORM_MODEL = {
   headimg: '',
   order_no: '',
   name: '',
@@ -10,6 +10,7 @@ const DEFAULT_FORM_MODEL = {
   birth: '',
   country: '',
   code: '',
+  address: '',
   email: '',
   mobile: '',
   role: '',
@@ -19,11 +20,14 @@ const DEFAULT_FORM_MODEL = {
   organize_contact: '',
   custom_project: [],
   project_id: [],
+  fileList: [],
   entourage_num: 0
 }
 export const useRegistrationStore = defineStore('app-registration', () => {
-  const formModel = ref(DEFAULT_FORM_MODEL)
+  const formModel = ref({ ...DEFAULT_FORM_MODEL })
+  const isEdit = ref(false)
   return {
+    isEdit,
     formModel
   }
 })

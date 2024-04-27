@@ -61,9 +61,16 @@ export const router = createRouter({
           component: () => import('@/views/RegistrationList.vue')
         },
         {
-          path: APP_ROUTE_PATHS.PAYMENT,
-          name: 'REGISTRATION_LIST',
-          component: () => import('@/views/Payment.vue')
+          path: `${APP_ROUTE_PATHS.REGISTRATION_DETAIL}/:id`,
+          name: 'REGISTRATION_DETAIL',
+          component: () => import('@/views/RegistrationDetail.vue'),
+          props: true
+        },
+        {
+          path: `${APP_ROUTE_PATHS.PAYMENT}/:id`,
+          name: 'PAYMENT',
+          component: () => import('@/views/Payment.vue'),
+          props: true
         },
         {
           path: APP_ROUTE_PATHS.SHAOLIN_TECHNIQUES,
@@ -74,6 +81,12 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.ACTIVE_EMAIL,
           name: 'ACTIVE_EMAIL',
           component: () => import('@/views/ActiveEmail.vue')
+        },
+        {
+          path: `${APP_ROUTE_PATHS.SEND_EMAIL}/:type`,
+          name: 'SEND_EMAIL',
+          component: () => import('@/views/SendEmail.vue'),
+          props: true
         }
       ]
     }

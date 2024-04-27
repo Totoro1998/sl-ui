@@ -1,13 +1,12 @@
-import { useI18n } from './useI18n'
-
 export const REGISTRATION_STATUS = {
-  NOT_PASS: 'not_pass',
-  PASSED: 'passed',
-  PENDING: 'pending'
+  WAIT_SUBMIT: 1,
+  WAIT_AUDITING: 10,
+  SUCCESS: 20,
+  FAIL: 30,
+  CANCEL: 40
 }
 
 export default function useRegistration() {
-  const { t } = useI18n()
   const getStatusSetting = (status) => {
     let statusSetting = {
       text: '',
@@ -15,23 +14,21 @@ export default function useRegistration() {
       icon: ''
     }
     switch (status) {
-      case REGISTRATION_STATUS.NOT_PASS:
+      case REGISTRATION_STATUS.FAIL:
         statusSetting = {
-          text: t('signUpDetail.notPass'),
           color: '#F5222D',
           icon: 'clear'
         }
         break
-      case REGISTRATION_STATUS.PASSED:
+      case REGISTRATION_STATUS.SUCCESS:
         statusSetting = {
-          text: t('signUpDetail.passed'),
           color: '#31cc80',
           icon: 'checked'
         }
         break
-      case REGISTRATION_STATUS.PENDING:
+      case REGISTRATION_STATUS.WAIT_AUDITING:
+      case REGISTRATION_STATUS.WAIT_SUBMIT:
         statusSetting = {
-          text: t('signUpDetail.passed'),
           color: 'rgb(40, 120, 255)',
           icon: 'underway'
         }

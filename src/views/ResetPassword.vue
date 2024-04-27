@@ -63,7 +63,6 @@ const handleSubmit = () => {
       code: code.value,
       type: 20
     }).then((res) => {
-      console.log(res)
       checkedCode.value = res.data.code
       resetPasswordSetting.value.buttonType = RESET_PASSWORD_BUTTON_TYPE.RESET
     })
@@ -72,8 +71,7 @@ const handleSubmit = () => {
       email: authEmail.value,
       code: checkedCode.value,
       password: password.value
-    }).then((res) => {
-      console.log(res)
+    }).then(() => {
       resetPasswordSetting.value.generateCodeTime = ''
     })
   }

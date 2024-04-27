@@ -8,7 +8,8 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL
 export const BASE_API_URL = `${BASE_URL}${import.meta.env.VITE_API_PERFIX}`
 
 export const STORAGE_KEY = {
-  REGISTER_EMAIL: 'storage_key_1'
+  REGISTER_EMAIL: 'storage_key_1',
+  SEND_EMAIL: 'storage_key_2'
 }
 
 export const APP_ROUTE_PATHS = {
@@ -19,14 +20,16 @@ export const APP_ROUTE_PATHS = {
   PLAYER_REGISTRATION_FORM: 'personal-registration-form',
   COACH_REGISTRATION_FORM: 'coach-registration-form',
   REGISTRATION_LIST: 'registration-list',
+  REGISTRATION_DETAIL: 'registration-detail',
   PAYMENT: 'payment',
   SHAOLIN_TECHNIQUES: 'shaolin-techniques',
-  ACTIVE_EMAIL: 'active-email'
+  ACTIVE_EMAIL: 'active-email',
+  SEND_EMAIL: 'send-email'
 }
 
 export const GENDER = {
-  FEMALE: 'female',
-  MALE: 'male'
+  FEMALE: 2,
+  MALE: 1
 }
 
 export const REQUEST_URL = {
@@ -50,7 +53,8 @@ export const REQUEST_URL = {
 export const SEND_EMAIL_CODE_TYPE = {
   ACTIVE_EMAIL: 10,
   RESET_PASSWORD: 20,
-  LOGIN_BY_CODE: 30
+  LOGIN_BY_CODE: 30,
+  AUTH: 40
 }
 
 export const CODE_TYPE = {
@@ -73,6 +77,6 @@ export const ROLE_LIST = [
 ]
 
 export const ORDER_TYPE = {
-  USER: 'user',
+  USER: 'personal',
   ORGANIZE: 'organize'
 }

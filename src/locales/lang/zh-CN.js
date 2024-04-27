@@ -93,6 +93,10 @@ export default {
       edit: '编辑',
       registerForCompetition: '报名参赛'
     },
+    registrationList: {
+      personal: '我是选手',
+      organize: '我是教练/馆校长'
+    },
     registrationForm: {
       playerTitle: '参赛选手报名表',
       coachTitle: '教练/校长报名表',
@@ -104,13 +108,17 @@ export default {
       accompanyingPersonnelCount: '随行人员人数',
       total: '共',
       payment: '支付',
+      maxFileSize: '上传照片，不得超过2M',
       paymentSuccess: '支付成功',
       grandTotal: '合计：',
       deducted: '已减扣',
       saveDraft: '暂存草稿',
       viewRegistrationInfo: '查看报名信息',
       alreadySelect: '已选择',
-      person: '人'
+      person: '人',
+      edit: '编辑',
+      cancel: '取消',
+      save: '保存'
     },
     competingEvents: {
       title: '选择参赛项目',
@@ -125,7 +133,7 @@ export default {
     participantRegistrationDetail: {
       title: '参赛选手报名表',
       passed: '已通过',
-      paid: '已支付',
+      paied: '已支付',
       downloadConfirmationLetter: '下载确认函'
     },
     payment: {
