@@ -1,7 +1,7 @@
 <script setup>
 import countryList from '@/assets/country.json'
 import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '@/hooks/useI18n'
 import { groupBy, sortBy } from 'lodash-es'
 import AppIndexBar from '@/components/widgets/AppIndexBar.vue'
 import { useCountryStore } from '@/store/country'
