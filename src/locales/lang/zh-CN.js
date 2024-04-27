@@ -177,6 +177,86 @@ export default {
       loginText: '登录',
       pleaseLoginText: '您好，请登录',
       hello: '您好'
+    },
+
+    // 首页
+    homeNavBarSection: {
+      home: '首 页',
+      schedule: '赛 程',
+      signUp: '报 名',
+      donation: '捐 赠'
+    },
+    homeBannerSection: {
+      titleLineOne: '2024 少林功夫',
+      titleLineSecond: '考功大赛总决赛',
+      position: '少林寺·中国嵩山',
+      competitorsEnter: '参赛选手报名',
+      coach: '教练/管校长报名'
+    },
+    homeTimeBlockSection: {
+      title: '2024 少林功夫考功大赛',
+      date: '07/13 -07/14,2024',
+      days: 'Days',
+      hour: 'Hrs',
+      minute: 'Min',
+      second: 'Sec'
+    },
+    homeActivitySection: {
+      title: '大和尚开示',
+      description: `"Lorem ipsum dolor sit amet conse ctetur adipiscing elit Vel
+      mauris turpis vel eget nec orci nec ipsum Elementum felis
+      eu pellentesque velit vulputate. Blandit consequat facilisi
+      sagittis ut quis Integer et faucibus elemen."`,
+      actor: 'John Carter',
+      position: 'Creative Director at Facebook'
+    },
+    homeScheduleSection: {
+      title: '赛程安排',
+      actionDate: '12/07,2024',
+      endDate: '15/07,2024',
+      planA: '报道',
+      planADate: '12 / 07, 2024',
+      planB: '报道',
+      planBDate: '13 /07, 2024',
+      planC: '总决赛',
+      planCDate: '14/07, 2024',
+      downloadLink: '下载参赛手册'
+    },
+    homeMedalSection: {
+      title: '紧那罗王金像奖',
+      tips: '2024总决赛最高奖',
+      medalA: '杰出教练奖',
+      medalB: '杰出贡献奖',
+      medalC: '最佳组织奖'
+    },
+    homeSignUpSection: {
+      title: '报名',
+      actionDate: '12/07,2024',
+      endDate: '15/07,2024',
+      contentTitle: '报名需知',
+      content: '1.本次报名仅面向. \n2.本次报名时间为...',
+      clickBtnText: '立即报名'
+    },
+    homeFAQSection: {
+      title: 'F & Q',
+      tips: '更多问题，联系我们',
+      questionA: 'What is Webflow and why is it the best website builder?',
+      answerA: `Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium
+      risus euismod dictum egestas orci netus feugiat ut egestas ut sagittis
+      tincidunt phasellus elit etiam cursus orci in.ld sed montes.`,
+      questionB: 'What is your favorite template from BRlX Templates?',
+      answerB: `Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium`,
+      questionC: 'How do you clone a Webflow Template?',
+      answerC: `risus euismod dictum egestas orci netus feugiat ut egestas ut sagittis`,
+      questionD: 'Why is BRlX Templates the best Webflow agency?',
+      answerD: `tincidunt phasellus elit etiam cursus orci in.ld sed montes.
+      tincidunt phasellus elit etiam cursus orci in.ld sed montes.
+      tincidunt phasellus elit etiam cursus orci in.ld sed montes.
+      tincidunt phasellus elit etiam cursus orci in.ld sed montes.
+      tincidunt phasellus elit etiam cursus orci in.ld sed montes.`
+    },
+    homePartnersSection: {
+      title: '合作伙伴'
     }
   }
 }

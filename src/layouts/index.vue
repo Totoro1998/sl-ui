@@ -5,13 +5,17 @@ import AppFooter from './components/AppFooter.vue'
 import { useRouter } from 'vue-router'
 import { useCommonStore } from '@/store/common'
 import { ref } from 'vue'
+import { setupWow } from '@/utils/wow'
+import { onMounted } from 'vue'
 
 const router = useRouter()
 const wrapperRef = ref(null)
-
 const { setCommonStore } = useCommonStore()
-
 setCommonStore()
+
+onMounted(() => {
+  setupWow()
+})
 
 router.beforeEach((to, from, next) => {
   wrapperRef.value &&
@@ -25,6 +29,7 @@ router.beforeEach((to, from, next) => {
 
 <template>
   <div
+    id="app-wrapper-id"
     ref="wrapperRef"
     class="w-full h-full overflow-y-scroll hidden-scrollbar relative pt-[--header-height] flex flex-col"
   >

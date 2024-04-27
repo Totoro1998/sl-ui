@@ -21,6 +21,7 @@ export default defineConfig({
       resolvers: [VantResolver()]
     })
   ],
+  optimizeDeps: ['vant/es/**/*.css'],
   server: {
     open: true,
     port: 9527

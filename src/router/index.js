@@ -13,7 +13,7 @@ export const router = createRouter({
         {
           path: '',
           name: 'home',
-          component: () => import('@/views/HomeView.vue')
+          component: () => import('@/views/HomeView/index.vue')
         },
         {
           path: APP_ROUTE_PATHS.REGISTER,
