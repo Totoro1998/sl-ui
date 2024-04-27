@@ -108,7 +108,7 @@ export default {
       accompanyingPersonnelCount: '随行人员人数',
       total: '共',
       payment: '支付',
-
+      maxFileSize: '上传照片，不得超过2M',
       paymentSuccess: '支付成功',
       grandTotal: '合计：',
       deducted: '已减扣',

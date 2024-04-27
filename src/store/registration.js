@@ -25,7 +25,9 @@ export const DEFAULT_FORM_MODEL = {
 }
 export const useRegistrationStore = defineStore('app-registration', () => {
   const formModel = ref({ ...DEFAULT_FORM_MODEL })
+  const isEdit = ref(false)
   return {
+    isEdit,
     formModel
   }
 })

@@ -6,12 +6,17 @@ import { REGISTRATION_STATUS } from '@/hooks/useRegistration'
 
 import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
 import { requestGet } from '@/lib/request'
+import { useRegistrationStore } from '@/store/registration'
+import { storeToRefs } from 'pinia'
 import { ref, computed } from 'vue'
 
 const props = defineProps(['id'])
-const detail = ref({})
+
 const { t } = useI18n()
-const isEdit = ref(false)
+
+const detail = ref({})
+const store = useRegistrationStore()
+const { isEdit } = storeToRefs(store)
 const RegistrationFormRef = ref(null)
 
 const title = computed(() => {
@@ -26,19 +31,21 @@ const title = computed(() => {
   }
 })
 
-requestGet(`${REQUEST_URL.ORDER_DETAIL}?orderNo=${props.id}`).then((res) => {
-  detail.value = res.data
-})
-
+const initdata = () => {
+  requestGet(`${REQUEST_URL.ORDER_DETAIL}?orderNo=${props.id}`).then((res) => {
+    detail.value = res.data
+  })
+}
 const handleReset = () => {
   RegistrationFormRef.value.handleSetValueFromInit(detail.value)
   isEdit.value = false
 }
-
 const handleSave = () => {
-  RegistrationFormRef.value.handleSubmit()
+  RegistrationFormRef.value.handleSubmit('edit', initdata)
   isEdit.value = false
 }
+
+initdata()
 </script>
 <template>
   <BaseContentLayout :title="title">

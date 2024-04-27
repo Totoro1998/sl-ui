@@ -56,7 +56,7 @@ const handleInput = (e) => {
       :model-value="telValue"
       @input="handleInput"
       :disabled="disabled"
-      v-bind="{ ...props, ...$attrs }"
+      :placeholder="placeholder"
       :border="false"
     >
       <template #button>

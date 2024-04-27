@@ -102,7 +102,7 @@ const afterRead = (file) => {
     formModel.value.headimg = res.data.hash
   })
 }
-const handleSubmit = async (type) => {
+const handleSubmit = async (type, callback) => {
   await RegistrationFormRef.value.validate()
   if (formModel.value.order_no && type === 'payment') {
     router.push({
@@ -146,6 +146,7 @@ const handleSubmit = async (type) => {
     'organize_project_id',
     'entourage_num'
   ])
+
   if (!authStore.userInfo.email) {
     const sendEmailSetting = {
       email: params.email,
@@ -164,12 +165,16 @@ const handleSubmit = async (type) => {
     })
   } else {
     requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
-      router.push({
-        name: 'PAYMENT',
-        params: {
-          id: res.data.orderId
-        }
-      })
+      if (type !== 'edit') {
+        router.push({
+          name: 'PAYMENT',
+          params: {
+            id: res.data.orderId
+          }
+        })
+      } else {
+        callback()
+      }
     })
   }
 }
@@ -234,14 +239,20 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-4">
           <div class="flex items-center justify-center">
-            <van-uploader :after-read="afterRead" max-count="1" v-model="formModel.fileList">
+            <van-uploader
+              :after-read="afterRead"
+              max-count="1"
+              :deletable="isEdit"
+              v-model="formModel.fileList"
+              :max-size="2 * 1024 * 1024"
+            >
               <div class="flex flex-col items-center gap-6">
                 <div
                   class="bg-[#8D8BA7] rounded-full w-[144px] h-[144px] flex items-center justify-center"
                 >
                   <van-icon name="contact" color="white" size="77" />
                 </div>
-                <span class="text-[#86909C] text-xs">上传照片，不得超过2M</span>
+                <span class="text-[#86909C] text-xs">{{ t('registrationForm.maxFileSize') }}</span>
               </div>
             </van-uploader>
           </div>
