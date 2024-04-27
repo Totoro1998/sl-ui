@@ -81,6 +81,11 @@ export const router = createRouter({
           path: APP_ROUTE_PATHS.ACTIVE_EMAIL,
           name: 'ACTIVE_EMAIL',
           component: () => import('@/views/ActiveEmail.vue')
+        },
+        {
+          path: APP_ROUTE_PATHS.SEND_EMAIL,
+          name: 'SEND_EMAIL',
+          component: () => import('@/views/SendEmail.vue')
         }
       ]
     }

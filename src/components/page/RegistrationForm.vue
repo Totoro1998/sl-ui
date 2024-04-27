@@ -5,10 +5,10 @@ import { useCountryStore } from '@/store/country'
 import { useCommonStore } from '@/store/common'
 import appCountryList from '@/lib/countries'
 import { computed, watch, ref } from 'vue'
-import { useRegistrationStore } from '@/store/registration'
+import { useRegistrationStore, DEFAULT_FORM_MODEL } from '@/store/registration'
 import useValidate from '@/hooks/useValidate'
 import { requestPost } from '@/lib/request'
-import { ORDER_TYPE, REQUEST_URL } from '@/lib/const'
+import { ORDER_TYPE, REQUEST_URL, SEND_EMAIL_CODE_TYPE, STORAGE_KEY } from '@/lib/const'
 import { useProjectsStore } from '@/store/projects'
 import { pick } from 'lodash-es'
 import AppInput from '../widgets/AppInput.vue'
@@ -18,6 +18,8 @@ import AppTelInput from '../widgets/AppTelInput.vue'
 import { useRouter } from 'vue-router'
 import { isEmptyData } from '@/lib/util'
 import { REGISTRATION_STATUS } from '@/hooks/useRegistration'
+import { useAuthStore } from '@/store/auth'
+import LocalStorage from '@/lib/storage'
 
 const genderList = [
   {
@@ -41,6 +43,7 @@ const props = defineProps({
     default: true
   }
 })
+const authStore = useAuthStore()
 const { t } = useI18n()
 const router = useRouter()
 const countryStore = useCountryStore()
@@ -51,7 +54,7 @@ const { projectSetting } = storeToRefs(projectsStore)
 const { formModel } = storeToRefs(store)
 const { formRules } = useValidate(Object.keys(formModel.value))
 
-const fileList = ref([])
+const RegistrationFormRef = ref(null)
 
 const country = computed(() => countryStore.country)
 const isUser = computed(
@@ -99,8 +102,9 @@ const afterRead = (file) => {
     formModel.value.headimg = res.data.hash
   })
 }
-const handleSubmit = () => {
-  if (formModel.value.order_no) {
+const handleSubmit = async (type) => {
+  await RegistrationFormRef.value.validate()
+  if (formModel.value.order_no && type === 'payment') {
     router.push({
       name: 'PAYMENT',
       params: {
@@ -142,26 +146,55 @@ const handleSubmit = () => {
     'organize_project_id',
     'entourage_num'
   ])
-  requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
-    console.log(res)
-  })
+  if (!authStore.userInfo.email) {
+    const sendEmailSetting = {
+      email: params.email,
+      callback: ((code) => {
+        requestPost(REQUEST_URL.ORDER_SUBMIT, { ...params, code }).then((res) => {
+          LocalStorage.removeItem(STORAGE_KEY.SEND_EMAIL)
+          router.push({
+            name: 'PAYMENT',
+            params: {
+              id: res.data.orderId
+            }
+          })
+        })
+      }).toString()
+    }
+    LocalStorage.setItem(STORAGE_KEY.SEND_EMAIL, sendEmailSetting)
+    requestPost(REQUEST_URL.SEND_EMAIL_CODE, {
+      email: sendEmailSetting.email,
+      type: SEND_EMAIL_CODE_TYPE.ACTIVE_EMAIL
+    })
+    router.push({ name: 'SEND_EMAIL' })
+  } else {
+    requestPost(REQUEST_URL.ORDER_SUBMIT, params).then((res) => {
+      router.push({
+        name: 'PAYMENT',
+        params: {
+          id: res.data.orderId
+        }
+      })
+    })
+  }
 }
 const handleSetValueFromInit = (value) => {
-  formModel.value = {
-    ...formModel.value,
-    ...value,
-    ...value.organize_info
-  }
-
   if (!isEmptyData(value)) {
+    formModel.value = {
+      ...formModel.value,
+      ...value,
+      ...value.organize_info
+    }
     const findItem = appCountryList.find((item) => item.value === value.country)
     countryStore.setCountry(findItem)
-    fileList.value = [{ url: value.headimg.url }]
+    formModel.value.fileList = [{ url: value.headimg.url }]
     formModel.value.headimg = value.headimg.hash
     projectSetting.value = {
       project_id: value ? value.projectInfo.map((item) => item.code) : [],
       custom_project: value ? value.custom_project : []
     }
+  } else {
+    formModel.value = DEFAULT_FORM_MODEL
   }
 }
 
@@ -186,9 +219,8 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
 </script>
 <template>
   <van-form
+    ref="RegistrationFormRef"
     class="registration-form"
-    validate-trigger="onSubmit"
-    @submit="handleSubmit"
     :disabled="!isEdit"
     label-align="top"
   >
@@ -206,7 +238,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-6 gap-x-4">
           <div class="flex items-center justify-center">
-            <van-uploader :after-read="afterRead" max-count="1" v-model="fileList">
+            <van-uploader :after-read="afterRead" max-count="1" v-model="formModel.fileList">
               <div class="flex flex-col items-center gap-6">
                 <div
                   class="bg-[#8D8BA7] rounded-full w-[144px] h-[144px] flex items-center justify-center"
@@ -382,7 +414,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
               </span>
             </div>
           </div>
-          <button
+          <div
             @click="router.push({ name: 'SHAOLIN_TECHNIQUES' })"
             :disabled="!isEdit"
             class="flex justify-between w-full py-3 items-center cursor-pointer"
@@ -392,7 +424,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
               {{ t('registrationForm.addProject') }}
             </span>
             <van-icon name="arrow" />
-          </button>
+          </div>
         </div>
       </div>
       <div class="space-y-6">
@@ -439,7 +471,7 @@ defineExpose({ handleSubmit, handleSetValueFromInit })
         </div>
         <van-button
           :disabled="!notPaied"
-          native-type="submit"
+          @click="handleSubmit('payment')"
           :style="{ width: '100px', color: notPaied ? 'white' : '#8D8BA7' }"
           round
           :color="notPaied ? '#ff6418' : '#D4D2E3'"

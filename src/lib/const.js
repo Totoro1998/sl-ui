@@ -8,7 +8,8 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL
 export const BASE_API_URL = `${BASE_URL}${import.meta.env.VITE_API_PERFIX}`
 
 export const STORAGE_KEY = {
-  REGISTER_EMAIL: 'storage_key_1'
+  REGISTER_EMAIL: 'storage_key_1',
+  SEND_EMAIL: 'storage_key_2'
 }
 
 export const APP_ROUTE_PATHS = {
@@ -22,7 +23,8 @@ export const APP_ROUTE_PATHS = {
   REGISTRATION_DETAIL: 'registration-detail',
   PAYMENT: 'payment',
   SHAOLIN_TECHNIQUES: 'shaolin-techniques',
-  ACTIVE_EMAIL: 'active-email'
+  ACTIVE_EMAIL: 'active-email',
+  SEND_EMAIL: 'send-email'
 }
 
 export const GENDER = {
