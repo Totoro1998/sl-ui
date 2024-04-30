@@ -24,7 +24,8 @@ export const APP_ROUTE_PATHS = {
   PAYMENT: 'payment',
   SHAOLIN_TECHNIQUES: 'shaolin-techniques',
   ACTIVE_EMAIL: 'active-email',
-  SEND_EMAIL: 'send-email'
+  SEND_EMAIL: 'send-email',
+  ENTRY: 'entry'
 }
 
 export const GENDER = {

@@ -257,6 +257,21 @@ export default {
     },
     homePartnersSection: {
       title: '合作伙伴'
+    },
+    entryKungfuFinais: {
+      title: '少林考功总决赛报名',
+      formTitle: '少林考功总决赛报名表',
+      tip: '仅限海外总决赛参赛选手报名'
+    },
+    seminarioCultural: {
+      title: '海外少林文化传习成果研讨会报名',
+      formTitle: '海外少林文化传习成果研讨会报名表',
+      tip: '仅限参加少林文化传习成果研讨会的教练/馆校长报名'
+    },
+    kungfuPerformance: {
+      title: '少林功夫展演报名',
+      formTitle: '少林功夫展演报名表',
+      tip: '仅限海外参加少林功夫展演选手报名'
     }
   }
 }

@@ -87,6 +87,17 @@ export const router = createRouter({
           name: 'SEND_EMAIL',
           component: () => import('@/views/SendEmail.vue'),
           props: true
+        },
+        {
+          path: `${APP_ROUTE_PATHS.ENTRY}`,
+          name: 'ENTRY',
+          component: () => import('@/views/Entry.vue')
+        },
+        {
+          path: `${APP_ROUTE_PATHS.ENTRY}/:type`,
+          name: 'ENTRY-FORM',
+          component: () => import('@/views/EntryForm.vue'),
+          props: true
         }
       ]
     }
