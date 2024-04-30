@@ -76,7 +76,13 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 320px;
   min-height: 100vh;
+  color: var(--primary-color);
+  overflow-wrap: break-word;
   color: var(--primary-color);
   background: #f2f2f7;
   transition:
@@ -100,4 +106,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+input:-internal-autofill-selected {
+  background-color: none !important;
 }
